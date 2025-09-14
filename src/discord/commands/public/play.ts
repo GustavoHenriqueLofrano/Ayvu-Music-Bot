@@ -1,6 +1,6 @@
-import { Playlist, useMainPlayer } from "discord-player";
 import { createCommand } from "#base";
 import { EmbedBuilder } from "@discordjs/builders";
+import { useMainPlayer } from "discord-player";
 import { ApplicationCommandOptionType, ApplicationCommandType, ChatInputCommandInteraction } from "discord.js";
 
 export default createCommand({
@@ -70,12 +70,28 @@ export default createCommand({
       if(searchResult.hasPlaylist() &&searchResult.playlist){
         const playlist = searchResult.playlist;
         const totalDuration = playlist.tracks.reduce(
-          (acc, t) => acc + (t.durationMS ?? 0),
+          (acc, t) => acc + (t.durationMS || 0),
           0
         );
+
+        // Format duration to human-readable format (e.g., "2:30:45")
+        const formatDuration = (ms: number): string => {
+          const seconds = Math.floor((ms / 1000) % 60);
+          const minutes = Math.floor((ms / (1000 * 60)) % 60);
+          const hours = Math.floor(ms / (1000 * 60 * 60));
+          
+          if (hours > 0) {
+            return `${hours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+          } else {
+            return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+          }
+        };
+        
+        const formattedDuration = formatDuration(totalDuration);
         
       
         embed = new EmbedBuilder()
+          .setThumbnail(searchResult.playlist.thumbnail)
           .setTitle("🎶 Tocando Playlist!")
           .setDescription(`Tocando \`${searchResult.playlist.title}\``)
           .setColor(0x3A0CA3)
@@ -84,12 +100,12 @@ export default createCommand({
             value: `${searchResult.playlist.tracks.length}`,
             inline: true},
             {name: "Duração",
-            value:  `${totalDuration}`,
+            value:  `${formattedDuration}`,
             inline: true}
           )
           .setFooter({
             text: `Pedido por ${interaction.user.tag}`,
-            iconURL: interaction.user.displayAvatarURL()
+            iconURL: interaction.user.displayAvatarURL(),
           })
           
           
@@ -97,6 +113,7 @@ export default createCommand({
       }
       else{
         embed = new EmbedBuilder()
+          .setThumbnail(track.thumbnail)
           .setTitle("🎸 Tocando música!")
           .setDescription(`Tocando \`${track.title}\``)
           .setColor(0x3A0CA3)
@@ -107,22 +124,13 @@ export default createCommand({
           })
           .setFooter({
             text: `Pedido por ${interaction.user.tag}`,
-            iconURL: interaction.user.displayAvatarURL()
-
+            iconURL: interaction.user.displayAvatarURL(),
           })
           
-      }
+      } 
       
       
         return interaction.editReply({ embeds: [embed] });
-    
-    
-    
-    
-    
-    
-    
-    
     
     } catch (err) {
       console.error("Erro no comando /play:", err);

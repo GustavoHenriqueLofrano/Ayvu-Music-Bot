@@ -1,9 +1,7 @@
 import { bootstrap } from "#base";
-import { AttachmentExtractor, DefaultExtractors, SoundCloudExtractor, SpotifyExtractor, } from "@discord-player/extractor";
+import { AttachmentExtractor, DefaultExtractors, SpotifyExtractor, } from "@discord-player/extractor";
 import { Player } from "discord-player";
 import { YoutubeiExtractor } from "discord-player-youtubei";
-import { YandexMusicExtractor } from "discord-player-yandexmusic";
-import { TTSExtractor } from "discord-player-tts";
 
 
 import { Client } from "discord.js";
@@ -25,9 +23,7 @@ await player.extractors.loadMulti(DefaultExtractors);
 await player.extractors.register(YoutubeiExtractor, {});
 await player.extractors.register(SpotifyExtractor, {})
 await player.extractors.register(AttachmentExtractor, {})
-await player.extractors.register(YandexMusicExtractor, {});
-await player.extractors.register(TTSExtractor, {language: "en", slow: false});
-await player.extractors.register(SoundCloudExtractor, {});
+
 
 
 await bootstrap({
