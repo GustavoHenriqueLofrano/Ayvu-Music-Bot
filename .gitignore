@@ -1,19 +1,16 @@
-# Folders
 /build
 /dist
 /discloud
 /deprecated
 /node_modules
 
-# Files
 /.env
 /.env.dev
 /.env.development
 
-# Config files
+
 /firebase.json
 
-# Extensions
 *.zip
 *.sqlite
 *.sql

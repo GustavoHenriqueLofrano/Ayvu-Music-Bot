@@ -4,10 +4,10 @@ import { ApplicationCommandType } from "discord.js";
 
 export default createCommand({
     name: "stop",
-    description: "stop command",
+    description: "para a música atual",
     type: ApplicationCommandType.ChatInput,
     async run(interaction){
-        
+            
         
     }
 });

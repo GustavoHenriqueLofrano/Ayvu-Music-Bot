@@ -1,9 +1,8 @@
 import { bootstrap } from "#base";
-import { AttachmentExtractor, DefaultExtractors, SpotifyExtractor, } from "@discord-player/extractor";
+import { AttachmentExtractor, DefaultExtractors, SoundCloudExtractor, SpotifyExtractor, } from "@discord-player/extractor";
 import { Player } from "discord-player";
 import { YoutubeiExtractor } from "discord-player-youtubei";
-
-
+import createPlayingNowEvent from "discord/events/playingNow.js";
 import { Client } from "discord.js";
 import "dotenv/config";
 
@@ -19,11 +18,13 @@ const client = new Client({
 
 const player = new Player(client as never);
 
-await player.extractors.loadMulti(DefaultExtractors);
-await player.extractors.register(YoutubeiExtractor, {});
-await player.extractors.register(SpotifyExtractor, {})
-await player.extractors.register(AttachmentExtractor, {})
+createPlayingNowEvent();
 
+await player.extractors.loadMulti(DefaultExtractors);
+await player.extractors.register(SoundCloudExtractor, {});
+await player.extractors.register(SpotifyExtractor, {});
+await player.extractors.register(YoutubeiExtractor, {});
+await player.extractors.register(AttachmentExtractor, {});
 
 
 await bootstrap({

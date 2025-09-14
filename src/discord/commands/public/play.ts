@@ -1,11 +1,11 @@
 import { createCommand } from "#base";
 import { EmbedBuilder } from "@discordjs/builders";
 import { useMainPlayer } from "discord-player";
-import { ApplicationCommandOptionType, ApplicationCommandType, ChatInputCommandInteraction } from "discord.js";
+import { ApplicationCommandOptionType, ApplicationCommandType} from "discord.js";
 
 export default createCommand({
   name: "play",
-  description: "Toca uma música",
+  description: "Adiciona uma música ou playlist a fila",
   type: ApplicationCommandType.ChatInput, // IMPORTANTE, verifica o tipo do comando, so funciona se tiver o tipo 1
   options: [
     {
@@ -16,7 +16,7 @@ export default createCommand({
     },
   ],
 
-  run: async (interaction: ChatInputCommandInteraction<"cached">) => {  
+  async run (interaction) {  
     // inicializa o player
     const player = useMainPlayer();
     
@@ -92,11 +92,10 @@ export default createCommand({
       
         embed = new EmbedBuilder()
           .setThumbnail(searchResult.playlist.thumbnail)
-          .setTitle("🎶 Tocando Playlist!")
-          .setDescription(`Tocando \`${searchResult.playlist.title}\``)
+          .setTitle("➕  Playlist adicionada!")
           .setColor(0x3A0CA3)
           .addFields(
-            {name: "Musicas",
+            {name: "Músicas",
             value: `${searchResult.playlist.tracks.length}`,
             inline: true},
             {name: "Duração",
@@ -107,26 +106,19 @@ export default createCommand({
             text: `Pedido por ${interaction.user.tag}`,
             iconURL: interaction.user.displayAvatarURL(),
           })
-          
-          
+        
           
       }
       else{
         embed = new EmbedBuilder()
           .setThumbnail(track.thumbnail)
-          .setTitle("🎸 Tocando música!")
-          .setDescription(`Tocando \`${track.title}\``)
-          .setColor(0x3A0CA3)
-          .addFields({
-            name: "Duração",
-            value: track.duration,
-            inline: true
-          })
+          .setTitle("➕  Música adicionada!")
+          .setDescription(`[\`${interaction.options.getString('query', true)}\`]`)
+          .setColor(0x3A0CA3)  
           .setFooter({
             text: `Pedido por ${interaction.user.tag}`,
             iconURL: interaction.user.displayAvatarURL(),
-          })
-          
+          })    
       } 
       
       

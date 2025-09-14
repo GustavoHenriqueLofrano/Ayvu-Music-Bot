@@ -33,6 +33,7 @@
     "mediaplex": "^1.0.0",
     "play-dl": "^1.9.7",
     "rou3": "0.7.3",
+    "youtubei.js": "^15.1.1",
     "zod": "4.0.17"
   },
   "devDependencies": {
