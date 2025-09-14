@@ -10,7 +10,7 @@ export default createCommand({
     async run(interaction){
         const player = useMainPlayer();
         
-        player.
+        player.asdasda
         
         
     }
