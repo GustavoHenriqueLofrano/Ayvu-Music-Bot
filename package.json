@@ -5,6 +5,7 @@
   "scripts": {
     "check": "tsc --noEmit && echo ✔ Ok",
     "build": "tsc",
+    "postinstall": "tsc",
     "dev": "tsx --env-file .env ./src/index.ts",
     "dev:dev": "tsx --env-file .env.dev ./src/index.ts",
     "watch": "tsx --watch --env-file .env ./src/index.ts",
