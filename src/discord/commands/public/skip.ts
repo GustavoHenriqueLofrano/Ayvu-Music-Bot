@@ -7,27 +7,28 @@ export default createCommand({
     name: "skip",
     description: "pula a música atual",
     type: ApplicationCommandType.ChatInput,
-    async run (interaction){
+    async run (interaction): Promise<void>{
         const player = useMainPlayer();
         const queue = player.nodes.get(interaction.guildId as never);
 
         if(!queue){
-            return interaction.reply({
+            await interaction.reply({
                 content: "😕 Nenhuma música tocando",
                 ephemeral: true,
-            })
+            });
+            return;
         }
         
         try{
             const sucess = queue.node.skip();
             if(!sucess){
-                return interaction.reply({
+                await interaction.reply({
                     content: "😕 Nenhuma música tocando",
                     ephemeral: false,
                 })
             }
             if(sucess){
-                return interaction.reply({
+                await interaction.reply({
                     content: "⏩  Música pulada",
                     ephemeral: false
                 })

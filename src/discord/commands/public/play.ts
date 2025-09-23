@@ -16,7 +16,7 @@ export default createCommand({
     },
   ],
 
-  async run (interaction) {  
+  async run (interaction): Promise<void> {  
     // inicializa o player
     const player = useMainPlayer();
     
@@ -25,7 +25,7 @@ export default createCommand({
     
     // verifica se esta em um canal de voz
     if (!channel) {
-      return interaction.reply({
+      interaction.reply({
         content: "❌ Você precisa estar em um canal de voz.",
         ephemeral: true,
       });
@@ -46,7 +46,7 @@ export default createCommand({
         .setDescription(`Nenhum resultado para \`${query}\``)
         .setColor(0xED4245);
 
-      return interaction.editReply({ embeds: [embed] });
+      await interaction.editReply({ embeds: [embed] });
     }
 
     try {
@@ -118,7 +118,7 @@ export default createCommand({
           })    
       } 
       
-        return interaction.editReply({ embeds: [embed] });
+        await interaction.editReply({ embeds: [embed] });
     
     } catch (err) {
       console.error("Erro no comando /play:", err);
@@ -128,7 +128,7 @@ export default createCommand({
         .setDescription(`Algo deu errado ao tocar \`${query}\``)
         .setColor(0xED4245)
 
-      return interaction.editReply({ embeds: [embed] });
+      await interaction.editReply({ embeds: [embed] });
     }
   },
 });

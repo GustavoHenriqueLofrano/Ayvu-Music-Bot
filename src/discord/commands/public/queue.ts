@@ -6,12 +6,12 @@ export default createCommand({
     name: "queue",
     description: "queue command",
     type: ApplicationCommandType.ChatInput,
-    async run(interaction){
+    async run(interaction): Promise<void>{
         const player = useMainPlayer();
         const queue = player.nodes.get(interaction.guildId as never);
         
         if(!queue){
-            return interaction.reply({
+            await interaction.reply({
                 content: "😕 Nenhuma música tocando",
                 ephemeral: true,
             })
