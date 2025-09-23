@@ -1,13 +1,11 @@
 /build
 /dist
-/discloud
 /deprecated
 /node_modules
 
 /.env
 /.env.dev
 /.env.development
-
 
 /firebase.json
 bun.lock
