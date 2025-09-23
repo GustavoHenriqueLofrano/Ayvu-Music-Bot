@@ -1,5 +1,7 @@
 import { bootstrap } from "#base";
-import { AttachmentExtractor, DefaultExtractors, SoundCloudExtractor, SpotifyExtractor, } from "@discord-player/extractor";
+import { AttachmentExtractor} from "@discord-player/extractor";
+import { SpotifyExtractor } from "discord-player-spotify";
+import { SoundcloudExtractor } from "discord-player-soundcloud";
 import { Player } from "discord-player";
 import { YoutubeiExtractor } from "discord-player-youtubei";
 import createPlayingNowEvent from "discord/events/playingNow.js";
@@ -20,7 +22,7 @@ const player = new Player(client as never);
 
 createPlayingNowEvent();
 
-await player.extractors.register(SoundCloudExtractor, {});
+await player.extractors.register(SoundcloudExtractor, {});
 await player.extractors.register(SpotifyExtractor, {
   clientId: process.env.SPOTIFY_CLIENT_ID,
   clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
