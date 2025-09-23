@@ -20,10 +20,19 @@ const player = new Player(client as never);
 
 createPlayingNowEvent();
 
-await player.extractors.loadMulti(DefaultExtractors);
 await player.extractors.register(SoundCloudExtractor, {});
-await player.extractors.register(SpotifyExtractor, {});
-await player.extractors.register(YoutubeiExtractor, {});
+await player.extractors.register(SpotifyExtractor, {
+  clientId: process.env.SPOTIFY_CLIENT_ID,
+  clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
+});
+await player.extractors.register(YoutubeiExtractor, {
+  generateWithPoToken: true,
+  streamOptions: {
+    highWaterMark: 1 << 25,
+    useClient: true,
+  },
+  cookie: process.env.YT_COOKIES,
+});
 await player.extractors.register(AttachmentExtractor, {});
 
 
@@ -35,4 +44,3 @@ await bootstrap({
 
 
 client.login(process.env.BOT_TOKEN);
-

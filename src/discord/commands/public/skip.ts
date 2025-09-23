@@ -7,7 +7,7 @@ export default createCommand({
     name: "skip",
     description: "pula a música atual",
     type: ApplicationCommandType.ChatInput,
-    async run(interaction){
+    async run (interaction){
         const player = useMainPlayer();
         const queue = player.nodes.get(interaction.guildId as never);
 
@@ -23,13 +23,13 @@ export default createCommand({
             if(!sucess){
                 return interaction.reply({
                     content: "😕 Nenhuma música tocando",
-                    ephemeral: true,
+                    ephemeral: false,
                 })
             }
             if(sucess){
                 return interaction.reply({
                     content: "⏩  Música pulada",
-                    ephemeral: true
+                    ephemeral: false
                 })
             }
         }catch(err){

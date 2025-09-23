@@ -23,6 +23,7 @@
     "discord-player-deezer": "^2.5.0",
     "discord-player-soundcloud": "^1.0.7",
     "discord-player-soundgasm": "^1.1.5",
+    "discord-player-spotify": "^1.1.7",
     "discord-player-tidal": "^0.1.0",
     "discord-player-tts": "^1.0.9",
     "discord-player-yandexmusic": "^0.1.10",
@@ -31,10 +32,14 @@
     "dotenv": "^17.2.2",
     "ffmpeg-static": "^5.2.0",
     "mediaplex": "^1.0.0",
+    "opusscript": "^0.0.8",
     "play-dl": "^1.9.7",
-    "rou3": "0.7.3",
+    "rou3": "^0.7.5",
+    "simple-folder-search": "^2.3.0",
+    "youtube-sr": "^4.3.12",
+    "youtubei": "^1.7.0",
     "youtubei.js": "^15.1.1",
-    "zod": "4.0.17"
+    "zod": "^4.1.11"
   },
   "devDependencies": {
     "@types/node": "22.16.4",

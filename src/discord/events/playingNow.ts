@@ -6,18 +6,16 @@ export default function createPlayingNowEvent() {
 
     player.events.on("playerStart", (queue, track) => {
         const channel = queue.metadata.channel as TextChannel;
-
-        const requester = (track.requestedBy ?? queue.metadata.requestedBy) as User;
+        const requester = (queue.metadata.requestedBy) as User;
 
         const embed = new EmbedBuilder()
-            .setTitle("🎵  Tocando Agora!")
-            .setDescription(`[${track.title}](${track.url}) • ${track.author}`)
+            .setTitle("  Tocando Agora!")
+            .setDescription(`[${track.title}](${track.url})`)
+            .addFields(
+                { name: "Autor", value: track.author, inline: true },
+                { name: "Duração", value: track.duration, inline: true}
+              )
             .setColor(0xF72585)
-            .addFields({
-                name: "Duração",
-                value: track.duration,
-                inline: true,
-            })
             .setThumbnail(track.thumbnail)
             .setFooter({
                 text: `Pedido por ${requester.tag}`,

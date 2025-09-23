@@ -55,12 +55,11 @@ export default createCommand({
         nodeOptions: {
           metadata: {interaction, guild: interaction.guild, channel: interaction.channel, requestedBy: interaction.user },
           selfDeaf: true,
-          leaveOnEmpty: false,
-          leaveOnEnd: false,
+          leaveOnEmpty: true,
+          leaveOnEnd: true,
           leaveOnEmptyCooldown: 60000, //1 min
           leaveOnEndCooldown: 60000,
-          preferBridgedMetadata: true, // usar o metadata do canal de voz
-
+          volume: 50,
         },
         requestedBy: interaction.user as never,
       });
@@ -73,8 +72,6 @@ export default createCommand({
           (acc, t) => acc + (t.durationMS || 0),
           0
         );
-
-        // Format duration to human-readable format (e.g., "2:30:45")
         const formatDuration = (ms: number): string => {
           const seconds = Math.floor((ms / 1000) % 60);
           const minutes = Math.floor((ms / (1000 * 60)) % 60);
@@ -120,7 +117,6 @@ export default createCommand({
             iconURL: interaction.user.displayAvatarURL(),
           })    
       } 
-      
       
         return interaction.editReply({ embeds: [embed] });
     

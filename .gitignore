@@ -10,6 +10,7 @@
 
 
 /firebase.json
+bun.lock
 
 *.zip
 *.sqlite
@@ -17,3 +18,5 @@
 *.exe
 *.db
 *.development.json
+
+youtube.json
