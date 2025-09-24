@@ -1,14 +1,12 @@
-
-/dist
-/deprecated
 /node_modules
-
 /.env
 /.env.dev
 /.env.development
-
 /firebase.json
-bun.lock
+/bun.lock
+
+/dist
+/deprecated
 
 *.zip
 *.sqlite
@@ -16,5 +14,3 @@ bun.lock
 *.exe
 *.db
 *.development.json
-
-youtube.json
