@@ -18,7 +18,7 @@
 		"noUnusedParameters": true,
 		"noImplicitReturns": true,
 		"noImplicitOverride": true,
-		"noEmitOnError": true,
+		//"noEmitOnError": true,
 
 		// Output Options
 		"outDir": "./build",
