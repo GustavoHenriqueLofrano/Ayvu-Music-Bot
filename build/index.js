@@ -7,6 +7,7 @@ import { YoutubeiExtractor } from "discord-player-youtubei";
 import createPlayingNowEvent from "./discord/events/playingNow.js";
 import { Client } from "discord.js";
 import "dotenv/config";
+
 const client = new Client({
     intents: [
         'GuildVoiceStates',
