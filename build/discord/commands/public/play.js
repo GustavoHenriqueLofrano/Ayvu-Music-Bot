@@ -1,4 +1,4 @@
-import { createCommand } from "#base";
+import { createCommand } from "../../base/index.js";
 import { EmbedBuilder } from "@discordjs/builders";
 import { useMainPlayer } from "discord-player";
 import { ApplicationCommandOptionType, ApplicationCommandType } from "discord.js";

@@ -1,4 +1,4 @@
-import { validateEnv } from "#base";
+import { validateEnv } from "./discord/base/index.js";
 import { z } from "zod";
 export const env = validateEnv(z.object({
     BOT_TOKEN: z.string("Discord Bot Token is required").min(1),

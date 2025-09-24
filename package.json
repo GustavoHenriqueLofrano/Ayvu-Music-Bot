@@ -4,7 +4,7 @@
   "main": "build/index.js",
   "scripts": {
     "check": "tsc --noEmit && echo ✔ Ok",
-    "build": "tsc",
+    "build": "tsc && tsc-alias",
     "dev": "tsx --env-file .env ./src/index.ts",
     "dev:dev": "tsx --env-file .env.dev ./src/index.ts",
     "watch": "tsx --watch --env-file .env ./src/index.ts",
@@ -43,6 +43,7 @@
   },
   "devDependencies": {
     "@types/node": "22.16.4",
+    "tsc-alias": "^1.8.16",
     "tsx": "4.19.3",
     "typescript": "^5.9.2"
   },

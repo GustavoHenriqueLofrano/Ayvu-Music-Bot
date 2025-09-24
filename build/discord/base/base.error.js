@@ -1,4 +1,4 @@
-import { env } from "#env";
+import { env } from "../../env.js";
 import { brBuilder, createEmbed, createEmbedAuthor, createWebhookClient, limitText, replaceText } from "@magicyan/discord";
 import ck from "chalk";
 import { codeBlock } from "discord.js";

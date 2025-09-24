@@ -1,10 +1,10 @@
-import { bootstrap } from "#base";
+import { bootstrap } from "./discord/base/index.js";
 import { AttachmentExtractor } from "@discord-player/extractor";
 import { SpotifyExtractor } from "discord-player-spotify";
 import { SoundcloudExtractor } from "discord-player-soundcloud";
 import { Player } from "discord-player";
 import { YoutubeiExtractor } from "discord-player-youtubei";
-import createPlayingNowEvent from "discord/events/playingNow.js";
+import createPlayingNowEvent from "./discord/events/playingNow.js";
 import { Client } from "discord.js";
 import "dotenv/config";
 const client = new Client({

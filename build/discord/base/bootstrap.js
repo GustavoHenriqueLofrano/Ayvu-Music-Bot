@@ -1,4 +1,4 @@
-import { env } from "#env";
+import { env } from "../../env.js";
 import { CustomItents, CustomPartials } from "@magicyan/discord";
 import { glob } from "@reliverse/reglob";
 import ck from "chalk";

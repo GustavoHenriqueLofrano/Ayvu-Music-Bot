@@ -1,6 +1,6 @@
 import { ApplicationCommandOptionType, ApplicationCommandType } from "discord.js";
 import { Constatic } from "./app.js";
-import { env } from "#env";
+import { env } from "../../env.js";
 export function setupCreators(options = {}) {
     const app = Constatic.getInstance();
     app.config.commands = { ...options.commands };

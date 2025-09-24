@@ -1,4 +1,4 @@
-import { createCommand } from "#base";
+import { createCommand } from "../../base/index.js";
 import { ApplicationCommandType } from "discord.js";
 import { useMainPlayer } from "discord-player";
 export default createCommand({
