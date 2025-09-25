@@ -1,6 +1,6 @@
 import { createCommand } from "../../base/index.js";
 import { EmbedBuilder } from "@discordjs/builders";
-import { useMainPlayer } from "discord-player";
+import { QueryType, useMainPlayer } from "discord-player";
 import { ApplicationCommandOptionType, ApplicationCommandType } from "discord.js";
 export default createCommand({
     name: "play",
@@ -21,8 +21,8 @@ export default createCommand({
         const channel = interaction.member.voice.channel;
         // verifica se esta em um canal de voz
         if (!channel) {
-            interaction.reply({
-                content: "❌ Você precisa estar em um canal de voz.",
+            return interaction.reply({
+                content: "😵 Você precisa estar em um canal de voz.",
                 ephemeral: true,
             });
         }
@@ -32,13 +32,14 @@ export default createCommand({
         // busca a música
         const result = await player.search(query, {
             requestedBy: interaction.user,
+            searchEngine: QueryType.AUTO,
         });
         if (!result.hasTracks()) {
             const embed = new EmbedBuilder()
                 .setTitle("Nenhum resultado encontrado")
                 .setDescription(`Nenhum resultado para \`${query}\``)
                 .setColor(0xED4245);
-            await interaction.editReply({ embeds: [embed] });
+            return interaction.editReply({ embeds: [embed] });
         }
         try {
             // Opções do player
@@ -50,7 +51,7 @@ export default createCommand({
                     leaveOnEnd: true,
                     leaveOnEmptyCooldown: 60000, //1 min
                     leaveOnEndCooldown: 60000,
-                    volume: 50,
+                    volume: 100,
                 },
                 requestedBy: interaction.user,
             });
@@ -95,7 +96,7 @@ export default createCommand({
                     iconURL: interaction.user.displayAvatarURL(),
                 });
             }
-            await interaction.editReply({ embeds: [embed] });
+            return interaction.editReply({ embeds: [embed] });
         }
         catch (err) {
             console.error("Erro no comando /play:", err);
@@ -103,7 +104,7 @@ export default createCommand({
                 .setTitle("Erro")
                 .setDescription(`Algo deu errado ao tocar \`${query}\``)
                 .setColor(0xED4245);
-            await interaction.editReply({ embeds: [embed] });
+            return interaction.editReply({ embeds: [embed] });
         }
     },
 });

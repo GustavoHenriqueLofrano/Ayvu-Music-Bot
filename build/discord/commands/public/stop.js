@@ -1,6 +1,6 @@
 import { createCommand } from "../../base/index.js";
-import { ApplicationCommandType } from "discord.js";
 import { useMainPlayer } from "discord-player";
+import { ApplicationCommandType } from "discord.js";
 export default createCommand({
     name: "stop",
     description: "para a música atual",

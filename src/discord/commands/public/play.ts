@@ -1,6 +1,6 @@
 import { createCommand } from "#base";
 import { EmbedBuilder } from "@discordjs/builders";
-import { useMainPlayer } from "discord-player";
+import { QueryType, useMainPlayer } from "discord-player";
 import { ApplicationCommandOptionType, ApplicationCommandType} from "discord.js";
 
 export default createCommand({
@@ -16,7 +16,7 @@ export default createCommand({
     },
   ],
 
-  async run (interaction): Promise<void> {  
+  async run (interaction) {  
     // inicializa o player
     const player = useMainPlayer();
     
@@ -25,8 +25,8 @@ export default createCommand({
     
     // verifica se esta em um canal de voz
     if (!channel) {
-      interaction.reply({
-        content: "❌ Você precisa estar em um canal de voz.",
+      return interaction.reply({
+        content: "😵 Você precisa estar em um canal de voz.",
         ephemeral: true,
       });
     }
@@ -38,6 +38,7 @@ export default createCommand({
     // busca a música
     const result = await player.search(query, {
       requestedBy: interaction.user as never,
+      searchEngine: QueryType.AUTO,
     });
 
     if (!result.hasTracks()) {
@@ -46,7 +47,7 @@ export default createCommand({
         .setDescription(`Nenhum resultado para \`${query}\``)
         .setColor(0xED4245);
 
-      await interaction.editReply({ embeds: [embed] });
+      return interaction.editReply({ embeds: [embed] });
     }
 
     try {
@@ -59,7 +60,7 @@ export default createCommand({
           leaveOnEnd: true,
           leaveOnEmptyCooldown: 60000, //1 min
           leaveOnEndCooldown: 60000,
-          volume: 50,
+          volume: 100,
         },
         requestedBy: interaction.user as never,
       });
@@ -118,7 +119,7 @@ export default createCommand({
           })    
       } 
       
-        await interaction.editReply({ embeds: [embed] });
+        return interaction.editReply({ embeds: [embed] });
     
     } catch (err) {
       console.error("Erro no comando /play:", err);
@@ -128,7 +129,7 @@ export default createCommand({
         .setDescription(`Algo deu errado ao tocar \`${query}\``)
         .setColor(0xED4245)
 
-      await interaction.editReply({ embeds: [embed] });
+      return interaction.editReply({ embeds: [embed] });
     }
   },
 });

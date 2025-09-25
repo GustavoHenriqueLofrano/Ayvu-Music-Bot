@@ -6,7 +6,7 @@ export default function createPlayingNowEvent() {
         const channel = queue.metadata.channel;
         const requester = (queue.metadata.requestedBy);
         const embed = new EmbedBuilder()
-            .setTitle("  Tocando Agora!")
+            .setTitle("🎸 Tocando Agora!")
             .setDescription(`[${track.title}](${track.url})`)
             .addFields({ name: "Autor", value: track.author, inline: true }, { name: "Duração", value: track.duration, inline: true })
             .setColor(0xF72585)

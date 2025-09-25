@@ -9,7 +9,7 @@ export default function createPlayingNowEvent() {
         const requester = (queue.metadata.requestedBy) as User;
 
         const embed = new EmbedBuilder()
-            .setTitle("  Tocando Agora!")
+            .setTitle("🎸 Tocando Agora!")
             .setDescription(`[${track.title}](${track.url})`)
             .addFields(
                 { name: "Autor", value: track.author, inline: true },

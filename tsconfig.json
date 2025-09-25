@@ -37,6 +37,7 @@
 			"#lib/*": ["./lib/*"],
 			"#emojis": ["../emojis.json"],
 			"#types/*": ["./@types/*"],
+			"#constants": ["../constants.json"],
 		}
 	},
 	

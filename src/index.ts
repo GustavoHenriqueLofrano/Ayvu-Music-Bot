@@ -1,7 +1,7 @@
 import { bootstrap } from "#base";
-import { AttachmentExtractor} from "@discord-player/extractor";
-import { SpotifyExtractor } from "discord-player-spotify";
+import { AttachmentExtractor, } from "@discord-player/extractor";
 import { SoundcloudExtractor } from "discord-player-soundcloud";
+import { SpotifyExtractor } from "discord-player-spotify";
 import { Player } from "discord-player";
 import { YoutubeiExtractor } from "discord-player-youtubei";
 import createPlayingNowEvent from "discord/events/playingNow.js";
@@ -33,6 +33,7 @@ await player.extractors.register(YoutubeiExtractor, {
     highWaterMark: 1 << 25,
     useClient: true,
   },
+  ignoreSignInErrors: true,
   cookie: process.env.YT_COOKIES,
 });
 await player.extractors.register(AttachmentExtractor, {});
