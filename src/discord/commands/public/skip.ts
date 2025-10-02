@@ -1,41 +1,47 @@
 import { createCommand } from "#base";
 import { useMainPlayer } from "discord-player";
-import { ApplicationCommandType, ChatInputCommandInteraction } from "discord.js";
+import { ApplicationCommandType } from "discord.js";
 
 
 export default createCommand({
     name: "skip",
     description: "pula a música atual",
     type: ApplicationCommandType.ChatInput,
-    async run (interaction: ChatInputCommandInteraction<"cached">): Promise<void>{
+    async run(interaction): Promise<void> {
         const player = useMainPlayer();
         const queue = player.nodes.get(interaction.guildId as never);
 
-        if(!queue){
+        if (!queue) {
             await interaction.reply({
                 content: "😕 Nenhuma música tocando",
                 ephemeral: true,
             });
             return;
         }
-        
-        try{
+
+        try {
             const sucess = queue.node.skip();
-            if(!sucess){
+            if (!sucess) {
                 await interaction.reply({
                     content: "😕 Nenhuma música tocando",
                     ephemeral: false,
                 })
             }
-            if(sucess){
+            if (!queue) {
+                await interaction.reply({
+                    content: "😕 Nenhuma música tocando",
+                    ephemeral: false,
+                })
+            }
+            if (sucess) {
                 await interaction.reply({
                     content: "⏩  Música pulada",
                     ephemeral: false
                 })
             }
-        }catch(err){
+        } catch (err) {
             console.error("Erro no comando /skip:", err);
         }
-         
+
     }
 });

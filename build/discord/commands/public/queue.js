@@ -4,7 +4,7 @@ import { useMainPlayer } from "discord-player";
 import { ApplicationCommandType } from "discord.js";
 export default createCommand({
     name: "queue",
-    description: "Mostra a fila de músicas",
+    description: "Mostra as próximas músicas na fila",
     type: ApplicationCommandType.ChatInput,
     async run(interaction) {
         const player = useMainPlayer();

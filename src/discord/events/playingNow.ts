@@ -13,8 +13,8 @@ export default function createPlayingNowEvent() {
             .setDescription(`[${track.title}](${track.url})`)
             .addFields(
                 { name: "Autor", value: track.author, inline: true },
-                { name: "Duração", value: track.duration, inline: true}
-              )
+                { name: "Duração", value: track.duration, inline: true }
+            )
             .setColor(0xF72585)
             .setThumbnail(track.thumbnail)
             .setFooter({

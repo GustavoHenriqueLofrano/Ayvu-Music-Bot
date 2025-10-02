@@ -23,6 +23,12 @@ export default createCommand({
                     ephemeral: false,
                 });
             }
+            if (!queue) {
+                await interaction.reply({
+                    content: "😕 Nenhuma música tocando",
+                    ephemeral: false,
+                });
+            }
             if (sucess) {
                 await interaction.reply({
                     content: "⏩  Música pulada",

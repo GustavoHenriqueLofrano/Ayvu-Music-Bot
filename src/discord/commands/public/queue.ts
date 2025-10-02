@@ -1,14 +1,14 @@
 import { createCommand } from "#base";
 import { EmbedBuilder } from "@discordjs/builders";
 import { useMainPlayer } from "discord-player";
-import { ApplicationCommandType, ChatInputCommandInteraction } from "discord.js";
+import { ApplicationCommandType } from "discord.js";
 
 export default createCommand({
   name: "queue",
-  description: "Mostra a fila de músicas",
+  description: "Mostra as próximas músicas na fila",
   type: ApplicationCommandType.ChatInput,
 
-  async run(interaction: ChatInputCommandInteraction<"cached">): Promise<void> {
+  async run(interaction): Promise<void> {
     const player = useMainPlayer();
     const queue = player.nodes.get(interaction.guildId as never);
 
@@ -36,12 +36,12 @@ export default createCommand({
           value:
             tracks.length > 0
               ? tracks
-                  .slice(0, 10) // limita
-                  .map(
-                    (track, i) =>
-                      `${i + 1} • [${track.title}](${track.url}) • \`${track.duration}\``
-                  )
-                  .join("\n")
+                .slice(0, 10) // limita
+                .map(
+                  (track, i) =>
+                    `${i + 1} • [${track.title}](${track.url}) • \`${track.duration}\``
+                )
+                .join("\n")
               : "Nenhuma música na fila",
         }
       )
