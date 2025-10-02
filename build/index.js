@@ -16,9 +16,11 @@ const client = new Client({
         'Guilds',
     ],
 });
-const player = new Player(client);
-createPlayingNowEvent();
-await player.extractors.register(SoundcloudExtractor, {});
+const player = new Player(client, );
+
+await player.extractors.register(SoundcloudExtractor, {
+
+});
 await player.extractors.register(SpotifyExtractor, {
     clientId: process.env.SPOTIFY_CLIENT_ID,
     clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
@@ -27,12 +29,15 @@ await player.extractors.register(YoutubeiExtractor, {
     generateWithPoToken: true,
     streamOptions: {
         highWaterMark: 1 << 25,
-        useClient: true,
+        useClient: "WEB",
     },
     ignoreSignInErrors: true,
     cookie: process.env.YT_COOKIES,
 });
 await player.extractors.register(AttachmentExtractor, {});
+
+createPlayingNowEvent();
+
 await bootstrap({
     meta: import.meta,
     modules: process.env.GUILD_ID ? [process.env.GUILD_ID] : undefined,
