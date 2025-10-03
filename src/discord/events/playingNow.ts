@@ -6,7 +6,6 @@ export default function createPlayingNowEvent() {
 
     player.events.on("playerStart", (queue, track) => {
         const channel = queue.metadata.channel as TextChannel;
-        const requester = (queue.metadata.requestedBy) as User;
 
         const embed = new EmbedBuilder()
             .setTitle("🎸 Tocando Agora!")
@@ -17,10 +16,6 @@ export default function createPlayingNowEvent() {
             )
             .setColor(0xF72585)
             .setThumbnail(track.thumbnail)
-            .setFooter({
-                text: `Pedido por ${requester.tag}`,
-                iconURL: requester.displayAvatarURL(),
-            });
 
         channel.send({ embeds: [embed] });
     });

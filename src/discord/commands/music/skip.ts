@@ -1,11 +1,11 @@
 import { createCommand } from "#base";
 import { useMainPlayer } from "discord-player";
-import { ApplicationCommandType } from "discord.js";
+import { ApplicationCommandType, EmbedBuilder } from "discord.js";
 
 
 export default createCommand({
     name: "skip",
-    description: "pula a música atual",
+    description: "Pula a música atual",
     type: ApplicationCommandType.ChatInput,
     async run(interaction): Promise<void> {
         const player = useMainPlayer();
@@ -18,28 +18,33 @@ export default createCommand({
             });
             return;
         }
-
         try {
             const sucess = queue.node.skip();
+            const nextTrack = queue.history.nextTrack
+
             if (!sucess) {
                 await interaction.reply({
                     content: "😕 Nenhuma música tocando",
-                    ephemeral: false,
+                    ephemeral: true,
                 })
+                return
             }
-            if (!queue) {
+            if (!queue || !nextTrack) {
                 await interaction.reply({
-                    content: "😕 Nenhuma música tocando",
-                    ephemeral: false,
+                    content: "😕 Nenhuma música na fila",
+                    ephemeral: true,
                 })
+                return  
             }
             if (sucess) {
-                await interaction.reply({
-                    content: "⏩  Música pulada",
-                    ephemeral: false
-                })
+                const embed = new EmbedBuilder()
+                .setColor(0x3A0CA3)
+                .setDescription("⏩ Música pulada")
+
+                interaction.editReply({embeds: [embed]})
+                return
             }
-        } catch (err) {
+        }catch (err) {
             console.error("Erro no comando /skip:", err);
         }
 

@@ -39,7 +39,7 @@ export default createCommand({
                 .slice(0, 10) // limita
                 .map(
                   (track, i) =>
-                    `${i + 1} • [${track.title}](${track.url}) • \`${track.duration}\``
+                    `${i + 1}  [${track.title}](${track.url})  \`${track.duration}\``
                 )
                 .join("\n")
               : "Nenhuma música na fila",
