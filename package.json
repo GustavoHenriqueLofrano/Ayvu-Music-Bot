@@ -1,47 +1,39 @@
 {
-  "name": "bot",
+  "name": "ayvu-music-bot",
   "type": "module",
   "main": "build/index.js",
   "scripts": {
     "check": "tsc --noEmit && echo ✔ Ok",
-    "build": "tsc && tsc-alias",
+    "build": "tsc",
     "dev": "tsx --env-file .env ./src/index.ts",
     "dev:dev": "tsx --env-file .env.dev ./src/index.ts",
     "watch": "tsx --watch --env-file .env ./src/index.ts",
     "watch:dev": "tsx --watch --env-file .env.dev ./src/index.ts",
-    "start": "node --env-file .env ./build/index.js",
+    "start": "node --env-file .env .",
     "start:dev": "node --env-file .env.dev ."
   },
   "dependencies": {
     "@discord-player/extractor": "^7.1.0",
-    "@discordjs/rest": "^2.6.0",
-    "@discordjs/voice": "^0.19.0",
-    "@distube/ytpl": "^1.2.3",
-    "@distube/ytsr": "^2.0.4",
+    "@discordjs/opus": "^0.10.0",
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
-    "@magicyan/discord": "1.5.2",
+    "@magicyan/discord": "1.5.4",
     "@reliverse/reglob": "1.0.0",
-    "chalk": "5.5.0",
-    "discord-api-types": "^0.38.26",
+    "chalk": "5.6.2",
     "discord-player": "^7.1.0",
     "discord-player-soundcloud": "^1.0.7",
     "discord-player-spotify": "^1.1.7",
     "discord-player-youtubei": "^1.5.0",
-    "discord.js": "^14.22.1",
-    "dotenv": "^17.2.2",
+    "discord.js": "14.22.1",
+    "dotenv": "^17.2.3",
     "ffmpeg-static": "^5.2.0",
     "mediaplex": "^1.0.0",
-    "rou3": "^0.7.5",
-    "youtube-sr": "^4.3.12",
-    "youtubei": "^1.7.0",
-    "youtubei.js": "^15.1.1",
-    "zod": "^4.1.11"
+    "rou3": "0.7.3",
+    "zod": "4.1.11"
   },
   "devDependencies": {
     "@types/node": "22.16.4",
-    "tsc-alias": "^1.8.16",
     "tsx": "4.19.3",
-    "typescript": "^5.9.2"
+    "typescript": "5.9.3"
   },
   "imports": {
     "#env": [
@@ -67,7 +59,10 @@
     ],
     "#lib/*": [
       "./build/lib/*"
+    ],
+    "#shared/*": [
+      "./build/shared/*"
     ]
   },
-  "baseVersion": "1.4.4"
+  "baseVersion": "1.4.8"
 }

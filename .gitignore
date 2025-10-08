@@ -1,13 +1,22 @@
+# Folders
+/build
+/dist
+/discloud
+/deprecated
 /node_modules
+
+# Test Commands
+/src/discord/public
+
+# Files
 /.env
 /.env.dev
 /.env.development
+
+# Config files
 /firebase.json
-/bun.lock
 
-/dist
-/deprecated
-
+# Extensions
 *.zip
 *.sqlite
 *.sql

@@ -1,2 +1,2 @@
-import { setupCreators } from "./base/index.js";
+import { setupCreators } from "#base";
 export const { createCommand, createEvent, createResponder } = setupCreators();

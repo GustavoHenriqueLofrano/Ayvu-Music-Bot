@@ -1,6 +1,6 @@
 import { createCommand } from "#base";
 import { useMainPlayer } from "discord-player";
-import { ApplicationCommandType, Embed, EmbedBuilder } from "discord.js";
+import { ApplicationCommandType, EmbedBuilder } from "discord.js";
 
 export default createCommand({
   name: "clear",

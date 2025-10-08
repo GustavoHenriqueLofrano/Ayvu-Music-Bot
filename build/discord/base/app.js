@@ -1,5 +1,4 @@
 import { brBuilder } from "@magicyan/discord";
-import { logger } from "./base.logger.js";
 import { CommandManager } from "./commands/manager.js";
 import { ResponderManager } from "./responders/manager.js";
 import { EventManager } from "./events/manager.js";
@@ -26,6 +25,6 @@ export class Constatic {
         return Constatic.instance;
     }
     printLoadLogs() {
-        logger.log(brBuilder(...this.commands.logs, ...this.responders.logs, ...this.events.logs));
+        console.log(brBuilder(...this.commands.logs, ...this.responders.logs, ...this.events.logs));
     }
 }

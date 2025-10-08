@@ -8,7 +8,7 @@ export default function createDisconnectEvent() {
         const channel = queue.metadata.channel;
 
         const embed = new EmbedBuilder()
-            .setTitle("Sai do canal de ... 👋Tchau!")
+            .setTitle("Sai do canal de voz... 👋Tchau!")
             .setColor(0xED4245)
 
         channel.send({ embeds: [embed] });

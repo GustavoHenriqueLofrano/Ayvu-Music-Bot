@@ -3,8 +3,8 @@ import { useMainPlayer } from "discord-player";
 import { ApplicationCommandType, EmbedBuilder } from "discord.js";
 
 export default createCommand({
-    name: "skip",
-    description: "Pula para a próxima música da fila",
+    name: "back",
+    description: "Volta para a música anterior",
     type: ApplicationCommandType.ChatInput,
     async run(interaction): Promise<void> {
         const player = useMainPlayer();
@@ -17,19 +17,26 @@ export default createCommand({
             });
             return
         }
+        if (!queue.history.previousTrack) {
+            await interaction.reply({
+                content: "😕 Nenhuma música anterior",
+                ephemeral: true,
+            });
+            return
+        }
         try {
-            queue.node.skip()
+            await queue.history.back()
 
             const embed = new EmbedBuilder()
                 .setColor(0x3A0CA3)
-                .setDescription("⏩ Pulando para a próxima música")
+                .setDescription("⏮️ Voltando para a música anterior")
 
             await interaction.reply({ embeds: [embed], ephemeral: false })
 
         } catch (err) {
             console.error(err);
             await interaction.reply({
-                content: "😵 Ocorreu um erro ao tentar pular para a próxima música",
+                content: "😵 Ocorreu um erro ao tentar voltar para a música anterior",
                 ephemeral: true,
             })
         }   

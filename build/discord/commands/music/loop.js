@@ -1,7 +1,6 @@
 import { createCommand } from "#base";
 import { useMainPlayer, QueueRepeatMode } from "discord-player";
 import { ApplicationCommandType, ApplicationCommandOptionType, EmbedBuilder } from "discord.js";
-
 export default createCommand({
     name: "loop",
     description: "Define o modo de repetição",
@@ -19,11 +18,10 @@ export default createCommand({
             ],
         },
     ],
-    async run(interaction): Promise<void>  {
+    async run(interaction) {
         const modo = interaction.options.getString("modo");
         const player = useMainPlayer();
-        const queue = player.nodes.get(interaction.guildId as never);
-
+        const queue = player.nodes.get(interaction.guildId);
         if (!queue || !queue.currentTrack) {
             await interaction.reply({
                 content: "😕 Nenhuma música tocando no momento",
@@ -31,11 +29,9 @@ export default createCommand({
             });
             return;
         }
-
         try {
-            let repeatMode: QueueRepeatMode;
-            let description: string;
-
+            let repeatMode;
+            let description;
             switch (modo) {
                 case "track":
                     repeatMode = QueueRepeatMode.TRACK;
@@ -48,14 +44,13 @@ export default createCommand({
                 case "off":
                 default:
                     repeatMode = QueueRepeatMode.AUTOPLAY
-                    ? QueueRepeatMode.AUTOPLAY
-                    : QueueRepeatMode.OFF;
+                        ? QueueRepeatMode.AUTOPLAY
+                        : QueueRepeatMode.OFF;
                     description = repeatMode === QueueRepeatMode.AUTOPLAY
-                    ? "🔁 Loop desativado, mas autoplay continua"
-                    : "❌ Repetição desativada"
+                        ? "🔁 Loop desativado, mas autoplay continua"
+                        : "❌ Repetição desativada";
                     break;
             }
-
             if (queue.repeatMode === repeatMode) {
                 await interaction.reply({
                     content: `ℹ️ O modo de repetição já está definido como **${modo === "off" ? "desativado" : modo === "track" ? "música atual" : "fila inteira"}**.`,
@@ -63,15 +58,13 @@ export default createCommand({
                 });
                 return;
             }
-
             queue.setRepeatMode(repeatMode);
-
             const embed = new EmbedBuilder()
                 .setColor(0x3A0CA3)
                 .setDescription(description);
-
             await interaction.reply({ embeds: [embed] });
-        } catch (err) {
+        }
+        catch (err) {
             console.error("Erro no comando /loop:", err);
             await interaction.reply({
                 content: "❌ Ocorreu um erro ao alterar o modo de repetição",

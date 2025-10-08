@@ -13,7 +13,20 @@ export default createCommand({
       description: "Nome ou link",
       type: ApplicationCommandOptionType.String, // tipo 3, string do comando play
       required: true,
+      autocomplete: true, // da sugestões de pesquisa
     },
+    {
+      name: "engine",
+      description: "engine de busca",
+      type: ApplicationCommandOptionType.String,
+      required: false,
+      choices: Object.values(QueryType).map(type => ({
+        name: type,
+        value: type
+      }))
+      ,
+    }
+    
   ],
 
   async run(interaction): Promise<void> {
@@ -38,7 +51,7 @@ export default createCommand({
     // busca a música
     const result = await player.search(query, {
       requestedBy: interaction.user as never,
-      searchEngine: QueryType.AUTO,
+      searchEngine: interaction.options.getString('engine') as never || QueryType.AUTO,
     });
 
     if (!result.hasTracks()) {
@@ -55,14 +68,16 @@ export default createCommand({
       const { track, searchResult } = await player.play(channel as never, result.tracks[0], {
         nodeOptions: {
           metadata: { interaction, guild: interaction.guild, channel: interaction.channel, requestedBy: interaction.user },
+          bufferingTimeout: 15000, 
+          leaveOnStop: true, 
+          leaveOnStopCooldown: 60000, 
+          leaveOnEnd: true, 
+          leaveOnEndCooldown: 60000, 
+          leaveOnEmpty: true, 
+          leaveOnEmptyCooldown: 60000, 
           selfDeaf: true,
-          leaveOnEmpty: true,
-          leaveOnEnd: true,
-          leaveOnEmptyCooldown: 60000, //1 min
-          leaveOnEndCooldown: 60000,
-          volume: 100,
+          volume: 80
         },
-        requestedBy: interaction.user as never,
       });
 
       let embed: EmbedBuilder;
@@ -114,7 +129,7 @@ export default createCommand({
         embed = new EmbedBuilder()
           .setThumbnail(track.thumbnail)
           .setTitle("➕  Música adicionada!")
-          .setDescription(`[${track.title}](${track.url})`)
+          .setDescription(`[${track.cleanTitle}](${track.url})`)
           .setColor(0x3A0CA3)
           .setFooter({
             text: `Pedido por ${interaction.user.tag}`,
@@ -135,4 +150,25 @@ export default createCommand({
       await interaction.editReply({ embeds: [embed] });
     }
   },
+  async autocomplete(interaction) {
+    const focusedValue = interaction.options.getFocused(true).value;
+
+    if (!focusedValue) {
+      await interaction.respond([]);
+      return;
+    }
+
+    const player = useMainPlayer();
+    const result = await player.search(focusedValue, {
+      requestedBy: interaction.user as never,
+      searchEngine: QueryType.AUTO,
+    });
+    const choices = result.tracks.slice(0, 5).map((track) => ({
+      name: track.title,
+      value: track.url,
+    }));
+    await interaction.respond(choices);
+
+
+  }
 });

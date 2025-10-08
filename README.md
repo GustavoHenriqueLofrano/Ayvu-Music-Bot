@@ -1,4 +1,4 @@
-# Ayvu Bot
+# Ayvu Music Bot
 
 > [!NOTE] 
 > This project **base** can be generated using the [Constant CLI](https://github.com/rinckodev/constatic)

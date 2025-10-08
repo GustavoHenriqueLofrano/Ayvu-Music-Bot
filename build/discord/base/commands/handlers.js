@@ -1,7 +1,6 @@
 import { brBuilder, isDefined, spaceBuilder } from "@magicyan/discord";
 import ck from "chalk";
 import { Constatic } from "../app.js";
-import { logger } from "../base.logger.js";
 import { RunBlockError } from "./types.js";
 export class BaseCommandHandlers {
     static async autocomplete(interaction) {
@@ -98,7 +97,7 @@ export class BaseCommandHandlers {
         }
         app.commands.clear();
         if (messages.length) {
-            logger.log(brBuilder(messages));
+            console.log(brBuilder(messages));
         }
     }
 }

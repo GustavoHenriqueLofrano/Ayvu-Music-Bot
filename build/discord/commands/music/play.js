@@ -1,4 +1,4 @@
-import { createCommand } from "../../base/index.js";
+import { createCommand } from "#base";
 import { EmbedBuilder } from "@discordjs/builders";
 import { QueryType, useMainPlayer } from "discord-player";
 import { ApplicationCommandOptionType, ApplicationCommandType } from "discord.js";
@@ -12,7 +12,18 @@ export default createCommand({
             description: "Nome ou link",
             type: ApplicationCommandOptionType.String, // tipo 3, string do comando play
             required: true,
+            autocomplete: true, // da sugestões de pesquisa
         },
+        {
+            name: "engine",
+            description: "engine de busca",
+            type: ApplicationCommandOptionType.String,
+            required: false,
+            choices: Object.values(QueryType).map(type => ({
+                name: type,
+                value: type
+            })),
+        }
     ],
     async run(interaction) {
         // inicializa o player
@@ -32,7 +43,7 @@ export default createCommand({
         // busca a música
         const result = await player.search(query, {
             requestedBy: interaction.user,
-            searchEngine: QueryType.AUTO,
+            searchEngine: interaction.options.getString('engine') || QueryType.AUTO,
         });
         if (!result.hasTracks()) {
             const embed = new EmbedBuilder()
@@ -46,14 +57,16 @@ export default createCommand({
             const { track, searchResult } = await player.play(channel, result.tracks[0], {
                 nodeOptions: {
                     metadata: { interaction, guild: interaction.guild, channel: interaction.channel, requestedBy: interaction.user },
-                    selfDeaf: true,
-                    leaveOnEmpty: true,
+                    bufferingTimeout: 15000,
+                    leaveOnStop: true,
+                    leaveOnStopCooldown: 60000,
                     leaveOnEnd: true,
-                    leaveOnEmptyCooldown: 60000, //1 min
                     leaveOnEndCooldown: 60000,
-                    volume: 100,
+                    leaveOnEmpty: true,
+                    leaveOnEmptyCooldown: 60000,
+                    selfDeaf: true,
+                    volume: 80
                 },
-                requestedBy: interaction.user,
             });
             let embed;
             if (searchResult.hasPlaylist() && searchResult.playlist) {
@@ -94,7 +107,7 @@ export default createCommand({
                 embed = new EmbedBuilder()
                     .setThumbnail(track.thumbnail)
                     .setTitle("➕  Música adicionada!")
-                    .setDescription(`[${track.title}](${track.url})`)
+                    .setDescription(`[${track.cleanTitle}](${track.url})`)
                     .setColor(0x3A0CA3)
                     .setFooter({
                     text: `Pedido por ${interaction.user.tag}`,
@@ -112,4 +125,21 @@ export default createCommand({
             await interaction.editReply({ embeds: [embed] });
         }
     },
+    async autocomplete(interaction) {
+        const focusedValue = interaction.options.getFocused(true).value;
+        if (!focusedValue) {
+            await interaction.respond([]);
+            return;
+        }
+        const player = useMainPlayer();
+        const result = await player.search(focusedValue, {
+            requestedBy: interaction.user,
+            searchEngine: QueryType.AUTO,
+        });
+        const choices = result.tracks.slice(0, 5).map((track) => ({
+            name: track.title,
+            value: track.url,
+        }));
+        await interaction.respond(choices);
+    }
 });

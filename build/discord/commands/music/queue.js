@@ -1,4 +1,4 @@
-import { createCommand } from "../../base/index.js";
+import { createCommand } from "#base";
 import { EmbedBuilder } from "@discordjs/builders";
 import { useMainPlayer } from "discord-player";
 import { ApplicationCommandType } from "discord.js";
@@ -29,7 +29,7 @@ export default createCommand({
             value: tracks.length > 0
                 ? tracks
                     .slice(0, 10) // limita
-                    .map((track, i) => `${i + 1} • [${track.title}](${track.url}) • \`${track.duration}\``)
+                    .map((track, i) => `${i + 1}  [${track.title}](${track.url})  \`${track.duration}\``)
                     .join("\n")
                 : "Nenhuma música na fila",
         })
