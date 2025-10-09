@@ -6,10 +6,10 @@
     "check": "tsc --noEmit && echo ✔ Ok",
     "build": "tsc",
     "dev": "tsx --env-file .env ./src/index.ts",
-    "dev:dev": "tsx --env-file .env.dev ./src/index.ts",
+    "dev:dev": "tsx --env-file .env ./src/index.ts",
     "watch": "tsx --watch --env-file .env ./src/index.ts",
     "watch:dev": "tsx --watch --env-file .env.dev ./src/index.ts",
-    "start": "node --env-file .env .",
+    "start": "node --env-file .env ./build/index.js",
     "start:dev": "node --env-file .env.dev ."
   },
   "dependencies": {
@@ -34,6 +34,9 @@
     "rimraf": "^5.0.10",
     "rou3": "0.7.3",
     "zod": "4.1.11"
+  },
+  "engines": {
+  "node": ">=18.0.0"
   },
   "devDependencies": {
     "@types/node": "22.16.4",
