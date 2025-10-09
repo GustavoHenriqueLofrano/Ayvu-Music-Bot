@@ -21,7 +21,7 @@ export default createCommand({
     }
 
     const currentTrack = queue.currentTrack;
-    const tracks = queue.tracks.toArray(); // pega as próximas músicas
+    const tracks = queue.tracks.toArray(); 
 
     const embed = new EmbedBuilder()
       .setColor(0x3a0ca3)
@@ -50,6 +50,6 @@ export default createCommand({
         iconURL: interaction.user.displayAvatarURL(),
       });
 
-    await interaction.reply({ embeds: [embed] });
+    await interaction.reply({ embeds: [embed], ephemeral: true });
   },
 });

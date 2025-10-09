@@ -31,24 +31,26 @@ const player = new Player(client, {
     blockStreamFrom: [],
     blockExtractors: []
 });
-//extractors
-await player.extractors.register(SoundcloudExtractor, {});
-await player.extractors.register(SpotifyExtractor, {
-    clientId: process.env.SPOTIFY_CLIENT_ID,
-    clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-});
-await player.extractors.loadMulti(DefaultExtractors);
-await player.extractors.register(YoutubeiExtractor, {
-    generateWithPoToken: true,
-    streamOptions: {
-        highWaterMark: 1024,
-        useClient: "WEB_EMBEDDED",
-    },
-    innertubeConfigRaw: {
-        player_id: '0004de42'
-    },
-    cookie: process.env.YT_COOKIES,
-});
+// Promise para carregar os extractors
+await Promise.all([
+    player.extractors.register(SoundcloudExtractor, {}),
+    player.extractors.register(SpotifyExtractor, {
+        clientId: process.env.SPOTIFY_CLIENT_ID,
+        clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
+    }),
+    player.extractors.loadMulti(DefaultExtractors),
+    player.extractors.register(YoutubeiExtractor, {
+        generateWithPoToken: true,
+        streamOptions: {
+            highWaterMark: 1024,
+            useClient: "WEB_EMBEDDED",
+        },
+        innertubeConfigRaw: {
+            player_id: '0004de42'
+        },
+        cookie: process.env.YT_COOKIES,
+    })
+]);
 //bootstrap da base do bot
 await bootstrap({
     meta: import.meta,

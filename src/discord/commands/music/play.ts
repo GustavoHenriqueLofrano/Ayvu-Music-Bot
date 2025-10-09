@@ -11,9 +11,9 @@ export default createCommand({
     {
       name: "query",
       description: "Nome ou link",
-      type: ApplicationCommandOptionType.String, // tipo 3, string do comando play
+      type: ApplicationCommandOptionType.String, 
       required: true,
-      autocomplete: true, // da sugestões de pesquisa
+      autocomplete: true,
     },
     {
       name: "engine",
@@ -30,13 +30,10 @@ export default createCommand({
   ],
 
   async run(interaction): Promise<void> {
-    // inicializa o player
     const player = useMainPlayer();
 
-    // pega o canal de voz do usuario
     const channel = interaction.member.voice.channel;
 
-    // verifica se esta em um canal de voz
     if (!channel) {
       await interaction.reply({
         content: "😵 Você precisa estar em um canal de voz.",
@@ -44,11 +41,10 @@ export default createCommand({
       });
     }
 
-    // pega a query
     const query = interaction.options.getString('query', true);
+    
     await interaction.deferReply();
 
-    // busca a música
     const result = await player.search(query, {
       requestedBy: interaction.user as never,
       searchEngine: interaction.options.getString('engine') as never || QueryType.AUTO,
@@ -64,7 +60,6 @@ export default createCommand({
     }
 
     try {
-      // Opções do player
       const { track, searchResult } = await player.play(channel as never, result.tracks[0], {
         nodeOptions: {
           metadata: { interaction, guild: interaction.guild, channel: interaction.channel, requestedBy: interaction.user },
@@ -136,8 +131,7 @@ export default createCommand({
             iconURL: interaction.user.displayAvatarURL(),
           })
       }
-
-      await interaction.editReply({ embeds: [embed] });
+      interaction.editReply({ embeds: [embed] });
 
     } catch (err) {
       console.error("Erro no comando /play:", err);
@@ -147,7 +141,7 @@ export default createCommand({
         .setDescription(`Algo deu errado ao tocar \`${query}\``)
         .setColor(0xED4245)
 
-      await interaction.editReply({ embeds: [embed] });
+      interaction.editReply({ embeds: [embed] });
     }
   },
   async autocomplete(interaction) {
@@ -164,11 +158,9 @@ export default createCommand({
       searchEngine: QueryType.AUTO,
     });
     const choices = result.tracks.slice(0, 5).map((track) => ({
-      name: track.title,
+      name: track.cleanTitle,
       value: track.url,
     }));
-    await interaction.respond(choices);
-
-
+    interaction.respond(choices);
   }
 });

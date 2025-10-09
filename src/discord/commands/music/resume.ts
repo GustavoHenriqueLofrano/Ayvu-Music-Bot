@@ -1,6 +1,7 @@
 import { createCommand } from "#base";
 import { useMainPlayer } from "discord-player";
 import { ApplicationCommandType, EmbedBuilder } from "discord.js";
+import formatDuration from "#functions";
 
 export default createCommand({
     name: "resume",
@@ -42,10 +43,3 @@ export default createCommand({
         }
     },
 });
-
-function formatDuration(ms: number): string {
-    const totalSeconds = Math.floor(ms / 1000);
-    const minutes = Math.floor(totalSeconds / 60);
-    const seconds = totalSeconds % 60;
-    return `${minutes}:${seconds.toString().padStart(2, "0")}`;
-}

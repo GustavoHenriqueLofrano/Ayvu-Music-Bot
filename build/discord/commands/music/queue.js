@@ -17,7 +17,7 @@ export default createCommand({
             return;
         }
         const currentTrack = queue.currentTrack;
-        const tracks = queue.tracks.toArray(); // pega as próximas músicas
+        const tracks = queue.tracks.toArray();
         const embed = new EmbedBuilder()
             .setColor(0x3a0ca3)
             .setTitle("🎶 Fila")
@@ -37,6 +37,6 @@ export default createCommand({
             text: `Pedido por ${interaction.user.tag}`,
             iconURL: interaction.user.displayAvatarURL(),
         });
-        await interaction.reply({ embeds: [embed] });
+        await interaction.reply({ embeds: [embed], ephemeral: true });
     },
 });
