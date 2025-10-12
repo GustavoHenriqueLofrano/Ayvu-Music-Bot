@@ -1,12 +1,9 @@
 # Folders
-/build
 /dist
 /discloud
 /deprecated
 /node_modules
 
-# Test Commands
-/src/discord/public
 
 # Files
 /.env
