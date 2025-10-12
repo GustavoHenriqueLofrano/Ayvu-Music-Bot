@@ -9,6 +9,7 @@ import createDisconnectEvent from "./discord/events/disconnect.js";
 import { Client, GatewayIntentBits, Partials } from "discord.js";
 import "dotenv/config";
 
+
 //client principal
 const client = new Client({
   intents: [

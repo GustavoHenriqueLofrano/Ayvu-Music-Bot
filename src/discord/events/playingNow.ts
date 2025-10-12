@@ -1,6 +1,6 @@
-import { QueueRepeatMode, useMainPlayer } from "discord-player";
-import {ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, TextChannel} from "discord.js";
 import formatDuration from "#functions";
+import { QueueRepeatMode, useMainPlayer } from "discord-player";
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, TextChannel } from "discord.js";
 
 
 export default function createPlayingNowEvent() {
@@ -81,7 +81,7 @@ export default function createPlayingNowEvent() {
                     }
                     buttonEmbed = new EmbedBuilder()
                         .setColor(0x3A0CA3)
-                        .setDescription(queue.node.isPaused() ? "▶️ Música tocando!" : "⏸️ Música pausada")
+                        .setDescription(queue.node.isPaused() ? "⏸️ Música pausada!" : "▶️ Música tocando!")
                         .addFields(
                             { name: "Música", value: `[${queue.currentTrack?.title}](${queue.currentTrack?.url})` },
                             { name: "Posição", value: formatDuration(queue.node.getTimestamp()?.current.value || 0) }
@@ -136,7 +136,7 @@ export default function createPlayingNowEvent() {
                     const autoplayMode = queue.repeatMode === QueueRepeatMode.AUTOPLAY ? 0 : QueueRepeatMode.AUTOPLAY;
                     queue.setRepeatMode(autoplayMode);
                     await interaction.reply({
-                        content: autoplayMode ? "🔀 Autoplay ativado!" : " Autoplay desativado!",
+                        content: autoplayMode ? "🔀 Autoplay ativado!" : "❌ Autoplay desativado!",
                         ephemeral: false,
                     });
                     break;

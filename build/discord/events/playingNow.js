@@ -62,7 +62,7 @@ export default function createPlayingNowEvent() {
                     }
                     buttonEmbed = new EmbedBuilder()
                         .setColor(0x3A0CA3)
-                        .setDescription(queue.node.isPaused() ? "▶️ Música tocando!" : "⏸️ Música pausada")
+                        .setDescription(queue.node.isPaused() ? "⏸️ Música pausada!" : "▶️ Música tocando!")
                         .addFields({ name: "Música", value: `[${queue.currentTrack?.title}](${queue.currentTrack?.url})` }, { name: "Posição", value: formatDuration(queue.node.getTimestamp()?.current.value || 0) });
                     await interaction.reply({ embeds: [buttonEmbed], ephemeral: false });
                     break;
