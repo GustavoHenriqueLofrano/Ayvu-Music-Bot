@@ -33,17 +33,17 @@ const player = new Player(client, {
 });
 // Promise para carregar os extractors
 await Promise.all([
-    player.extractors.register(SoundcloudExtractor, {}),
     player.extractors.register(SpotifyExtractor, {
         clientId: process.env.SPOTIFY_CLIENT_ID,
         clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
     }),
+    player.extractors.register(SoundcloudExtractor, {}),
     player.extractors.loadMulti(DefaultExtractors),
     player.extractors.register(YoutubeiExtractor, {
         generateWithPoToken: true,
         streamOptions: {
             highWaterMark: 1024,
-            useClient: "WEB",
+            useClient: "WEB_EMBEDDED", // web normal n funcona 
         },
         innertubeConfigRaw: {
             player_id: '0004de42'
