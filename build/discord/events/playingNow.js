@@ -1,6 +1,6 @@
+import formatDuration from "#functions";
 import { QueueRepeatMode, useMainPlayer } from "discord-player";
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } from "discord.js";
-import formatDuration from "#functions";
 export default function createPlayingNowEvent() {
     const player = useMainPlayer();
     player.events.on("playerStart", async (queue, track) => {
@@ -109,7 +109,7 @@ export default function createPlayingNowEvent() {
                     const autoplayMode = queue.repeatMode === QueueRepeatMode.AUTOPLAY ? 0 : QueueRepeatMode.AUTOPLAY;
                     queue.setRepeatMode(autoplayMode);
                     await interaction.reply({
-                        content: autoplayMode ? "🔀 Autoplay ativado!" : " Autoplay desativado!",
+                        content: autoplayMode ? "🔀 Autoplay ativado!" : "❌ Autoplay desativado!",
                         ephemeral: false,
                     });
                     break;

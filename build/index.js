@@ -43,7 +43,7 @@ await Promise.all([
         generateWithPoToken: true,
         streamOptions: {
             highWaterMark: 1024,
-            useClient: "WEB_EMBEDDED",
+            useClient: "WEB",
         },
         innertubeConfigRaw: {
             player_id: '0004de42'
