@@ -27,9 +27,9 @@ const client = new Client({
     Partials.User,
   ],
 });
-
+ 
 //player principal
-const player = new Player(client as never, {
+const player = new Player(client as never, { 
   skipFFmpeg: false,
   blockStreamFrom: [],
   blockExtractors: []
@@ -45,6 +45,7 @@ await Promise.all([
   player.extractors.loadMulti(DefaultExtractors),
   player.extractors.register(YoutubeiExtractor, {
     generateWithPoToken: true,
+    useServerAbrStream: true,
     streamOptions: {
       highWaterMark: 1024,
       useClient: "WEB_EMBEDDED", // web normal n funcona 
@@ -52,7 +53,7 @@ await Promise.all([
     innertubeConfigRaw: {
       player_id: '0004de42'
     },
-    cookie: process.env.YT_COOKIES,
+    
   })])
 
 
