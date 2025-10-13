@@ -131,7 +131,7 @@ export default createCommand({
             iconURL: interaction.user.displayAvatarURL(),
           })
       }
-      await interaction.editReply({ embeds: [embed] });
+      interaction.editReply({ embeds: [embed] });
 
     } catch (err) {
       console.error("Erro no comando /play:", err);
@@ -141,7 +141,7 @@ export default createCommand({
         .setDescription(`Algo deu errado ao tocar \`${query}\``)
         .setColor(0xED4245)
 
-      await interaction.editReply({ embeds: [embed] });
+      interaction.editReply({ embeds: [embed] });
     }
   },
   async autocomplete(interaction) {
@@ -157,10 +157,10 @@ export default createCommand({
       requestedBy: interaction.user as never,
       searchEngine: QueryType.AUTO,
     });
-    const choices = result.tracks.slice(0, 5).map((i) => ({
-      name: i.cleanTitle,
-      value: i.url,
+    const choices = result.tracks.slice(0, 5).map((track) => ({
+      name: track.cleanTitle,
+      value: track.url,
     }));
-    await interaction.respond(choices);
+    interaction.respond(choices);
   }
 });
