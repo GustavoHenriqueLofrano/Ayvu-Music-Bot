@@ -89,15 +89,23 @@ export default function createPlayingNowEvent() {
                     let queueMessage;
                     if (queue.repeatMode === QueueRepeatMode.OFF) {
                         queueMode = QueueRepeatMode.TRACK;
-                        queueMessage = "🔁 Modo repetição: Música atual";
+                        queueMessage = "🔂 Modo repetição: Música atual";
                     }
                     else if (queue.repeatMode === QueueRepeatMode.TRACK) {
                         queueMode = QueueRepeatMode.QUEUE;
                         queueMessage = "🔁 Modo repetição: Fila inteira";
                     }
+                    else if (queue.repeatMode === QueueRepeatMode.QUEUE) {
+                        queueMode = QueueRepeatMode.OFF;
+                        queueMessage = "➡️ Modo repetição: Desativado";
+                    }
                     else {
                         queueMode = QueueRepeatMode.OFF;
-                        queueMessage = "🔁 Modo repetição: Desativado";
+                        queueMessage = "➡️ Modo repetição: Desativado";
+                    }
+                    if (queue.repeatMode === QueueRepeatMode.AUTOPLAY) {
+                        queue.setRepeatMode(QueueRepeatMode.OFF);
+                        await new Promise(resolve => setTimeout(resolve, 100));
                     }
                     queue.setRepeatMode(queueMode);
                     await interaction.reply({

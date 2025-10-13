@@ -130,9 +130,9 @@ export default createCommand({
             requestedBy: interaction.user,
             searchEngine: QueryType.AUTO,
         });
-        const choices = result.tracks.slice(0, 5).map((track) => ({
-            name: track.cleanTitle,
-            value: track.url,
+        const choices = result.tracks.slice(0, 5).map((i) => ({
+            name: i.cleanTitle,
+            value: i.url,
         }));
         await interaction.respond(choices);
     }

@@ -3,7 +3,6 @@ import { DefaultExtractors } from "@discord-player/extractor"
 import { SpotifyExtractor } from "discord-player-spotify";
 import { Player } from "discord-player";
 import { YoutubeiExtractor } from "discord-player-youtubei";
-import { SoundcloudExtractor } from "discord-player-soundcloud"
 import createPlayingNowEvent from "./discord/events/playingNow.js"
 import createDisconnectEvent from "./discord/events/disconnect.js";
 import { Client, GatewayIntentBits, Partials } from "discord.js";
@@ -41,7 +40,6 @@ await Promise.all([
     clientId: process.env.SPOTIFY_CLIENT_ID,
     clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
   }),
-  player.extractors.register(SoundcloudExtractor, {}),
   player.extractors.loadMulti(DefaultExtractors),
   player.extractors.register(YoutubeiExtractor, {
     generateWithPoToken: true,
