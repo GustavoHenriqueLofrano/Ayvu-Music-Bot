@@ -45,7 +45,6 @@ await Promise.all([
   player.extractors.loadMulti(DefaultExtractors),
   player.extractors.register(YoutubeiExtractor, {
     generateWithPoToken: true,
-    useServerAbrStream: true,
     streamOptions: {
       highWaterMark: 1024,
       useClient: "WEB_EMBEDDED", // web normal n funcona 
@@ -53,9 +52,8 @@ await Promise.all([
     innertubeConfigRaw: {
       player_id: '0004de42'
     },
-    
-  })])
 
+  })])
 
 //bootstrap da base do bot
 await bootstrap({
