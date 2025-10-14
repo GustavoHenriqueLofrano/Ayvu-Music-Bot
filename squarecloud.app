@@ -1,6 +1,6 @@
 DISPLAY_NAME="Ayvu Music"
 MAIN=build/index.js
-VERSION=recommended
+VERSION=latest
 MEMORY=512
 START=START
 AUTORESTART=true
