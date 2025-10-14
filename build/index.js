@@ -3,6 +3,7 @@ import { DefaultExtractors } from "@discord-player/extractor";
 import { SpotifyExtractor } from "discord-player-spotify";
 import { Player } from "discord-player";
 import { YoutubeiExtractor } from "discord-player-youtubei";
+import { Innertube } from "youtubei.js";
 import createPlayingNowEvent from "./discord/events/playingNow.js";
 import createDisconnectEvent from "./discord/events/disconnect.js";
 import { Client, GatewayIntentBits, Partials } from "discord.js";
@@ -30,6 +31,15 @@ const player = new Player(client, {
     blockStreamFrom: [],
     blockExtractors: []
 });
+(async () => {
+    try {
+        const yt = await Innertube.create();
+        console.log("✅ YouTube Innertube iniciado:", yt.session.context.client.clientVersion);
+    }
+    catch (err) {
+        console.error(err);
+    }
+})();
 // Promise para carregar os extractors
 await Promise.all([
     player.extractors.register(SpotifyExtractor, {
