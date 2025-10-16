@@ -48,10 +48,9 @@ await Promise.all([
     }),
     player.extractors.loadMulti(DefaultExtractors),
     player.extractors.register(YoutubeiExtractor, {
-        generateWithPoToken: true,
         streamOptions: {
             highWaterMark: 1024,
-            useClient: "WEB_EMBEDDED", // web normal n funcona 
+            useClient: "TV", // usar TV ou WEM_EMBEDDED
         },
         innertubeConfigRaw: {
             player_id: '0004de42'
