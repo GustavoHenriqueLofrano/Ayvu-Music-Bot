@@ -28,7 +28,7 @@ const client = new Client({
 //player principal
 const player = new Player(client, {
     skipFFmpeg: false,
-    blockStreamFrom: [],
+    blockStreamFrom: ["SoundcloudExtractor"],
     blockExtractors: []
 });
 // Promise para carregar os extractors
@@ -43,7 +43,7 @@ await Promise.all([
         generateWithPoToken: true,
         streamOptions: {
             highWaterMark: 1024,
-            useClient: "WEB_EMBEDDED", // web normal n funcona 
+            useClient: "ANDROID", // web normal n funcona 
         },
         innertubeConfigRaw: {
             player_id: '0004de42'
