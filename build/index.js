@@ -1,13 +1,13 @@
 import { bootstrap } from "#base";
 import { DefaultExtractors } from "@discord-player/extractor";
-import { SpotifyExtractor } from "discord-player-spotify";
 import { Player } from "discord-player";
+import { SpotifyExtractor } from "discord-player-spotify";
 import { YoutubeiExtractor } from "discord-player-youtubei";
-import { Innertube } from "youtubei.js";
-import createPlayingNowEvent from "./discord/events/playingNow.js";
-import createDisconnectEvent from "./discord/events/disconnect.js";
 import { Client, GatewayIntentBits, Partials } from "discord.js";
 import "dotenv/config";
+import { Innertube } from "youtubei.js";
+import createDisconnectEvent from "./discord/events/disconnect.js";
+import createPlayingNowEvent from "./discord/events/playingNow.js";
 //client principal
 const client = new Client({
     intents: [
@@ -28,7 +28,7 @@ const client = new Client({
 //player principal
 const player = new Player(client, {
     skipFFmpeg: false,
-    blockStreamFrom: ["SoundcloudExtractor"],
+    blockStreamFrom: [],
     blockExtractors: []
 });
 (async () => {
@@ -50,14 +50,16 @@ await Promise.all([
     player.extractors.register(YoutubeiExtractor, {
         streamOptions: {
             highWaterMark: 1024,
-<<<<<<< HEAD
-            useClient: "TV", // usar TV ou WEM_EMBEDDED
-=======
-            useClient: "ANDROID", // web normal n funcona 
->>>>>>> 08fb546b418202604ad17b85016d887a68ce926a
+            useClient: "TV", // TV or WEM_EMBEDDED
         },
         innertubeConfigRaw: {
-            player_id: '0004de42'
+            player_id: '0004de42',
+            client: 'ANDROID_MUSIC',
+            clientName: 'ANDROID_MUSIC',
+            clientVersion: '6.42.1',
+            hl: 'pt-BR',
+            gl: 'BR',
+            timeZone: 'America/Sao_Paulo'
         },
     })
 ]);
