@@ -131,7 +131,7 @@ export default function createPlayingNowEvent() {
                     
                     if (queue.repeatMode === QueueRepeatMode.AUTOPLAY) {
                         queue.setRepeatMode(QueueRepeatMode.OFF);
-                        await new Promise(resolve => setTimeout(resolve, 100)); 
+                        await new Promise(resolve => setTimeout(resolve, 100)); //tempo de espera para evitar bugs
                     }
                     
                     queue.setRepeatMode(queueMode);

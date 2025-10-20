@@ -1,13 +1,13 @@
 import { bootstrap } from "#base";
-import { DefaultExtractors } from "@discord-player/extractor"
-import { SpotifyExtractor } from "discord-player-spotify";
+import { DefaultExtractors } from "@discord-player/extractor";
 import { Player } from "discord-player";
+import { SpotifyExtractor } from "discord-player-spotify";
 import { YoutubeiExtractor } from "discord-player-youtubei";
-import { Innertube } from "youtubei.js";
-import createPlayingNowEvent from "./discord/events/playingNow.js"
-import createDisconnectEvent from "./discord/events/disconnect.js";
 import { Client, GatewayIntentBits, Partials } from "discord.js";
 import "dotenv/config";
+import { Innertube } from "youtubei.js";
+import createDisconnectEvent from "./discord/events/disconnect.js";
+import createPlayingNowEvent from "./discord/events/playingNow.js";
 
 
 //client principal
@@ -54,13 +54,18 @@ await Promise.all([
   player.extractors.loadMulti(DefaultExtractors),
   player.extractors.register(YoutubeiExtractor, {
     streamOptions: {
-      highWaterMark: 1024,
-      useClient: "TV", // usar TV ou WEM_EMBEDDED
+      highWaterMark: 1024, 
+      useClient: "TV", // TV or WEM_EMBEDDED
     },
     innertubeConfigRaw: {
-      player_id: '0004de42'
+      player_id: '0004de42',
+      client: 'ANDROID_MUSIC',
+      clientName: 'ANDROID_MUSIC',
+      clientVersion: '6.42.1',
+      hl: 'pt-BR',
+      gl: 'BR',
+      timeZone: 'America/Sao_Paulo'
     },
-
   })])
 
 //bootstrap da base do bot
