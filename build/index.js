@@ -28,7 +28,7 @@ const client = new Client({
 //player principal
 const player = new Player(client, {
     skipFFmpeg: false,
-    blockStreamFrom: [],
+    blockStreamFrom: ["SoundcloudExtractor"],
     blockExtractors: []
 });
 (async () => {
@@ -50,7 +50,11 @@ await Promise.all([
     player.extractors.register(YoutubeiExtractor, {
         streamOptions: {
             highWaterMark: 1024,
+<<<<<<< HEAD
             useClient: "TV", // usar TV ou WEM_EMBEDDED
+=======
+            useClient: "ANDROID", // web normal n funcona 
+>>>>>>> 08fb546b418202604ad17b85016d887a68ce926a
         },
         innertubeConfigRaw: {
             player_id: '0004de42'
