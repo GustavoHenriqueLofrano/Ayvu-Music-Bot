@@ -53,18 +53,13 @@ await Promise.all([
   }),
   player.extractors.loadMulti(DefaultExtractors),
   player.extractors.register(YoutubeiExtractor, {
+    generateWithPoToken: true,
     streamOptions: {
       highWaterMark: 1024, 
-      useClient: "TV", // TV or WEM_EMBEDDED
+      useClient: "WEB_EMBEDDED", // TV or WEM_EMBEDDED
     },
     innertubeConfigRaw: {
       player_id: '0004de42',
-      client: 'ANDROID_MUSIC',
-      clientName: 'ANDROID_MUSIC',
-      clientVersion: '6.42.1',
-      hl: 'pt-BR',
-      gl: 'BR',
-      timeZone: 'America/Sao_Paulo'
     },
   })])
 
