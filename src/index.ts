@@ -1,5 +1,4 @@
 import { bootstrap } from "#base";
-import { DefaultExtractors } from "@discord-player/extractor";
 import { Player } from "discord-player";
 import { SpotifyExtractor } from "discord-player-spotify";
 import { YoutubeiExtractor } from "discord-player-youtubei";
@@ -51,12 +50,11 @@ await Promise.all([
     clientId: process.env.SPOTIFY_CLIENT_ID,
     clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
   }),
-  player.extractors.loadMulti(DefaultExtractors),
   player.extractors.register(YoutubeiExtractor, {
     generateWithPoToken: true,
     streamOptions: {
       highWaterMark: 1024, 
-      useClient: "ANDROID", // TV, WEM_EMBEDDED, WEB, ANDROID
+      useClient: "TV", // TV, WEM_EMBEDDED, WEB, ANDROID
     },
     innertubeConfigRaw: {
       player_id: '0004de42',
