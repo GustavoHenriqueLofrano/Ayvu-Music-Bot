@@ -56,7 +56,7 @@ await Promise.all([
     generateWithPoToken: true,
     streamOptions: {
       highWaterMark: 1024, 
-      useClient: "WEB_EMBEDDED", // TV or WEM_EMBEDDED
+      useClient: "ANDROID", // TV, WEM_EMBEDDED, WEB, ANDROID
     },
     innertubeConfigRaw: {
       player_id: '0004de42',
