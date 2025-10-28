@@ -1,8 +1,9 @@
 import { bootstrap } from "#base";
-import { Player } from "discord-player";
-import { SpotifyExtractor } from "discord-player-spotify";
 import { DefaultExtractors } from "@discord-player/extractor";
+import { Player } from "discord-player";
+import { AppleMusicExtractor } from "discord-player-applemusic";
 import { YoutubeSabrExtractor } from 'discord-player-googlevideo';
+import { SpotifyExtractor } from "discord-player-spotify";
 import { Client, GatewayIntentBits, Partials } from "discord.js";
 import "dotenv/config";
 import createDisconnectEvent from "./discord/events/disconnect.js";
@@ -31,11 +32,12 @@ const player = new Player(client, {
     blockExtractors: [],
 });
 await player.extractors.register(YoutubeSabrExtractor, {});
-await player.extractors.loadMulti(DefaultExtractors);
 await player.extractors.register(SpotifyExtractor, {
     clientId: process.env.SPOTIFY_CLIENT_ID,
     clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
 });
+await player.extractors.register(AppleMusicExtractor, {});
+await player.extractors.loadMulti(DefaultExtractors);
 // Bootstrap da base do bot
 await bootstrap({
     meta: import.meta,

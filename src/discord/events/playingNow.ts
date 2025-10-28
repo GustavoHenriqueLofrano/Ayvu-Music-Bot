@@ -69,6 +69,15 @@ export default function createPlayingNowEvent() {
                 await interaction.reply({ content: "❌ Nenhuma música tocando.", ephemeral: true });
                 return;
             }
+            const channel = interaction.member.voice.channel;
+
+            if (!channel) {
+                await interaction.reply({
+                    content: "😵 Você precisa estar em um canal de voz.",
+                    ephemeral: true,
+                });
+                return;
+            }
 
             let buttonEmbed: EmbedBuilder;
 
@@ -128,12 +137,12 @@ export default function createPlayingNowEvent() {
                         queueMode = QueueRepeatMode.OFF;
                         queueMessage = "➡️ Modo repetição: Desativado";
                     }
-                    
+
                     if (queue.repeatMode === QueueRepeatMode.AUTOPLAY) {
                         queue.setRepeatMode(QueueRepeatMode.OFF);
                         await new Promise(resolve => setTimeout(resolve, 100)); //tempo de espera para evitar bugs
                     }
-                    
+
                     queue.setRepeatMode(queueMode);
                     await interaction.reply({
                         content: queueMessage,

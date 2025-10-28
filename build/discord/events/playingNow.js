@@ -51,6 +51,14 @@ export default function createPlayingNowEvent() {
                 await interaction.reply({ content: "❌ Nenhuma música tocando.", ephemeral: true });
                 return;
             }
+            const channel = interaction.member.voice.channel;
+            if (!channel) {
+                await interaction.reply({
+                    content: "😵 Você precisa estar em um canal de voz.",
+                    ephemeral: true,
+                });
+                return;
+            }
             let buttonEmbed;
             switch (interaction.customId) {
                 case "pause_resume":

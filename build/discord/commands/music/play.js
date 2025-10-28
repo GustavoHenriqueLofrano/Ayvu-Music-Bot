@@ -33,6 +33,7 @@ export default createCommand({
                 content: "😵 Você precisa estar em um canal de voz.",
                 ephemeral: true,
             });
+            return;
         }
         const query = interaction.options.getString('query', true);
         await interaction.deferReply();
@@ -134,6 +135,6 @@ export default createCommand({
             name: track.cleanTitle,
             value: track.url,
         }));
-        interaction.respond(choices);
+        await interaction.respond(choices);
     }
 });

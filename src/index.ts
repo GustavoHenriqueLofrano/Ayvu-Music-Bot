@@ -1,8 +1,8 @@
 import { bootstrap } from "#base";
 import { Player } from "discord-player";
+import { SoundcloudExtractor } from "discord-player-soundcloud";
+import { YoutubeSabrExtractor } from "discord-player-googlevideo";
 import { SpotifyExtractor } from "discord-player-spotify";
-import {DefaultExtractors} from "@discord-player/extractor"
-import { YoutubeSabrExtractor } from 'discord-player-googlevideo';
 import { Client, GatewayIntentBits, Partials } from "discord.js";
 import "dotenv/config";
 import createDisconnectEvent from "./discord/events/disconnect.js";
@@ -29,25 +29,20 @@ const client = new Client({
 // Player principal
 const player = new Player(client as never, {
   skipFFmpeg: false,
-  blockStreamFrom: [],
-  blockExtractors: [],
+});
+await player.extractors.register(YoutubeSabrExtractor, {
 });
 
-await player.extractors.register(YoutubeSabrExtractor, {
-  
-});
-await player.extractors.loadMulti(DefaultExtractors);
 await player.extractors.register(SpotifyExtractor, {
   clientId: process.env.SPOTIFY_CLIENT_ID,
   clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
 });
 
-
-// Bootstrap da base do bot
 await bootstrap({
   meta: import.meta,
   modules: process.env.GUILD_ID ? [process.env.GUILD_ID] : undefined,
 });
+
 // Events
 createPlayingNowEvent();
 createDisconnectEvent();
