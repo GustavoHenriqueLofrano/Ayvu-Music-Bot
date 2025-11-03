@@ -1,6 +1,5 @@
 import { bootstrap } from "#base";
 import { Player } from "discord-player";
-import { SoundcloudExtractor } from "discord-player-soundcloud";
 import { YoutubeSabrExtractor } from "discord-player-googlevideo";
 import { SpotifyExtractor } from "discord-player-spotify";
 import { Client, GatewayIntentBits, Partials } from "discord.js";

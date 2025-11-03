@@ -48,7 +48,7 @@ export default function createPlayingNowEvent() {
                 .setEmoji("🔀")
                 .setStyle(ButtonStyle.Secondary)
         );
-
+        
         const message = await channel.send({
             embeds: [embed],
             components: [buttons],

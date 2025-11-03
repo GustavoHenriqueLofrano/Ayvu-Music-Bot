@@ -20,9 +20,9 @@ export default createCommand({
       description: "engine de busca",
       type: ApplicationCommandOptionType.String,
       required: false,
-      choices: Object.values(QueryType).map(type => ({
-        name: type,
-        value: type
+      choices: Object.values(QueryType).map(i => ({
+        name: i,
+        value: i
       }))
       ,
     }
@@ -48,7 +48,7 @@ export default createCommand({
 
     const result = await player.search(query, {
       requestedBy: interaction.user as never,
-      searchEngine: interaction.options.getString('engine') as never || QueryType.AUTO,
+      searchEngine: interaction.options.getString('engine') as never || QueryType.YOUTUBE,
     });
 
     if (!result.hasTracks()) {
@@ -72,10 +72,10 @@ export default createCommand({
           leaveOnEmpty: true, 
           leaveOnEmptyCooldown: 60000, 
           selfDeaf: true,
-          volume: 80
+
         },
       });
-
+      
       let embed: EmbedBuilder;
 
       if (searchResult.hasPlaylist() && searchResult.playlist) {
