@@ -39,7 +39,7 @@ export default createCommand({
             switch (modo) {
                 case "track":
                     repeatMode = QueueRepeatMode.TRACK;
-                    description = `🔁 Repetindo a música atual: **${queue.currentTrack.title}**`;
+                    description = `🔁 Repetindo a música atual: **${queue.currentTrack.cleanTitle}**`;
                     break;
                 case "queue":
                     repeatMode = QueueRepeatMode.QUEUE;
@@ -53,6 +53,7 @@ export default createCommand({
                     description = repeatMode === QueueRepeatMode.AUTOPLAY
                     ? "🔁 Loop desativado, mas autoplay continua"
                     : "❌ Repetição desativada"
+                    await new Promise(resolve => setTimeout(resolve, 100))
                     break;
             }
 
