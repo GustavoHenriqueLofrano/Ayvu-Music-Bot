@@ -1,6 +1,7 @@
 import { bootstrap } from "#base";
 import { Player } from "discord-player";
 import { YoutubeSabrExtractor } from "discord-player-googlevideo";
+import { YoutubeiExtractor } from "discord-player-youtubei";
 import { SpotifyExtractor } from "discord-player-spotify";
 import { Client, GatewayIntentBits, Partials } from "discord.js";
 import "dotenv/config";
@@ -25,13 +26,15 @@ const client = new Client({
 });
 // Player principal
 const player = new Player(client, {
+    blockStreamFrom: [YoutubeiExtractor.identifier],
     skipFFmpeg: false,
 });
-await player.extractors.register(YoutubeSabrExtractor, {});
 await player.extractors.register(SpotifyExtractor, {
     clientId: process.env.SPOTIFY_CLIENT_ID,
     clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
 });
+await player.extractors.register(YoutubeiExtractor, {});
+await player.extractors.register(YoutubeSabrExtractor, {});
 await bootstrap({
     meta: import.meta,
     modules: process.env.GUILD_ID ? [process.env.GUILD_ID] : undefined,

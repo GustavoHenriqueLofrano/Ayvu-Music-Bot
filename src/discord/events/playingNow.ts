@@ -18,7 +18,7 @@ export default function createPlayingNowEvent() {
         // Cria embed
         const embed = new EmbedBuilder()
             .setTitle(isAutoplay ? "🔁 Tocando pelo Autoplay!" : "🎸 Tocando Agora!")
-            .setDescription(`[${track.cleanTitle}](${track.url})`)
+            .setDescription(`[${track.title}](${track.url})`)
             .addFields(
                 { name: "Autor", value: track.author || "Desconhecido", inline: true },
                 { name: "Duração", value: track.duration || "Indefinida", inline: true }
@@ -26,7 +26,7 @@ export default function createPlayingNowEvent() {
             .setColor(isAutoplay ? 0x4cc9f0 : 0xf72585)
             .setThumbnail(track.thumbnail || null);
 
-        const buttons = new ActionRowBuilder<ButtonBuilder>().addComponents(
+        const buttons = new ActionRowBuilder<ButtonBuilder>().addComponents(    
             new ButtonBuilder()
                 .setCustomId("back")
                 .setEmoji("⏮️")
@@ -126,7 +126,7 @@ export default function createPlayingNowEvent() {
 
                     if (queue.repeatMode === QueueRepeatMode.OFF) {
                         queueMode = QueueRepeatMode.TRACK;
-                        queueMessage = `🔁 Repetindo a música atual: **${queue.currentTrack?.cleanTitle}**`;
+                        queueMessage = `🔁 Repetindo a música atual: **${queue.currentTrack?.title}**`;
                     } else if (queue.repeatMode === QueueRepeatMode.TRACK) {
                         queueMode = QueueRepeatMode.QUEUE;
                         queueMessage = "🔁 Modo repetição: Fila inteira";

@@ -13,7 +13,7 @@ export default function createPlayingNowEvent() {
         // Cria embed
         const embed = new EmbedBuilder()
             .setTitle(isAutoplay ? "🔁 Tocando pelo Autoplay!" : "🎸 Tocando Agora!")
-            .setDescription(`[${track.cleanTitle}](${track.url})`)
+            .setDescription(`[${track.title}](${track.url})`)
             .addFields({ name: "Autor", value: track.author || "Desconhecido", inline: true }, { name: "Duração", value: track.duration || "Indefinida", inline: true })
             .setColor(isAutoplay ? 0x4cc9f0 : 0xf72585)
             .setThumbnail(track.thumbnail || null);
@@ -30,7 +30,7 @@ export default function createPlayingNowEvent() {
             .setCustomId("loop")
             .setEmoji("🔁")
             .setStyle(ButtonStyle.Secondary), new ButtonBuilder()
-            .setCustomId("autoplay")
+            .setCustomId("random")
             .setEmoji("🔀")
             .setStyle(ButtonStyle.Secondary));
         const message = await channel.send({
@@ -97,7 +97,7 @@ export default function createPlayingNowEvent() {
                     let queueMessage;
                     if (queue.repeatMode === QueueRepeatMode.OFF) {
                         queueMode = QueueRepeatMode.TRACK;
-                        queueMessage = "🔂 Modo repetição: Música atual";
+                        queueMessage = `🔁 Repetindo a música atual: **${queue.currentTrack?.title}**`;
                     }
                     else if (queue.repeatMode === QueueRepeatMode.TRACK) {
                         queueMode = QueueRepeatMode.QUEUE;
@@ -115,19 +115,22 @@ export default function createPlayingNowEvent() {
                         queue.setRepeatMode(QueueRepeatMode.OFF);
                         await new Promise(resolve => setTimeout(resolve, 100)); //tempo de espera para evitar bugs
                     }
+                    const embed1 = new EmbedBuilder()
+                        .setColor(0x3A0CA3)
+                        .setDescription(queueMessage);
                     queue.setRepeatMode(queueMode);
-                    await interaction.reply({
-                        content: queueMessage,
-                        ephemeral: false,
-                    });
+                    await interaction.reply({ embeds: [embed1] });
                     break;
-                case "autoplay":
-                    const autoplayMode = queue.repeatMode === QueueRepeatMode.AUTOPLAY ? 0 : QueueRepeatMode.AUTOPLAY;
-                    queue.setRepeatMode(autoplayMode);
-                    await interaction.reply({
-                        content: autoplayMode ? "🔀 Autoplay ativado!" : "❌ Autoplay desativado!",
-                        ephemeral: false,
-                    });
+                case "random":
+                    if (queue.tracks.size < 2) {
+                        await interaction.reply({ content: "😕 A fila precisa ter pelo menos 2 músicas para ativar o modo aleatório", ephemeral: true });
+                        break;
+                    }
+                    const shuffleOn = queue.toggleShuffle();
+                    const embed = new EmbedBuilder()
+                        .setColor(0x4CC9F0)
+                        .setDescription(shuffleOn ? "🔀 Ordem aleatória ativada!" : "🔀 Ordem aleatória desativada!");
+                    await interaction.reply({ embeds: [embed] });
                     break;
             }
         });

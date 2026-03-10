@@ -1,8 +1,9 @@
 import { bootstrap } from "#base";
 import { Player } from "discord-player";
-import { YoutubeSabrExtractor } from "discord-player-googlevideo";
+import { YoutubeSabrExtractor  } from "discord-player-googlevideo";
 import { SpotifyExtractor } from "discord-player-spotify";
 import { Client, GatewayIntentBits, Partials } from "discord.js";
+import { SoundCloudExtractor} from '@discord-player/extractor';
 import "dotenv/config";
 import createDisconnectEvent from "./discord/events/disconnect.js";
 import createPlayingNowEvent from "./discord/events/playingNow.js";
@@ -29,13 +30,12 @@ const client = new Client({
 const player = new Player(client as never, {
   skipFFmpeg: false,
 });
-await player.extractors.register(YoutubeSabrExtractor, {
-});
-
+await player.extractors.register(SoundCloudExtractor, {});
 await player.extractors.register(SpotifyExtractor, {
   clientId: process.env.SPOTIFY_CLIENT_ID,
   clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
 });
+await player.extractors.register(YoutubeSabrExtractor, {});
 
 await bootstrap({
   meta: import.meta,

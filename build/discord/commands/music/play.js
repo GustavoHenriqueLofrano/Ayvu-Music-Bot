@@ -39,7 +39,7 @@ export default createCommand({
         await interaction.deferReply();
         const result = await player.search(query, {
             requestedBy: interaction.user,
-            searchEngine: interaction.options.getString('engine') || QueryType.YOUTUBE,
+            searchEngine: interaction.options.getString('engine') || QueryType.AUTO,
         });
         if (!result.hasTracks()) {
             const embed = new EmbedBuilder()
@@ -79,7 +79,7 @@ export default createCommand({
                 };
                 const formattedDuration = formatDuration(totalDuration);
                 embed = new EmbedBuilder()
-                    .setThumbnail(searchResult.playlist.thumbnail)
+                    .setThumbnail(track.thumbnail)
                     .setTitle("➕  Playlist adicionada!")
                     .setDescription(`[${playlist.title}](${playlist.url})`)
                     .setColor(0x3A0CA3)
@@ -101,7 +101,7 @@ export default createCommand({
                 embed = new EmbedBuilder()
                     .setThumbnail(track.thumbnail)
                     .setTitle("➕  Música adicionada!")
-                    .setDescription(`[${track.cleanTitle}](${track.url})`)
+                    .setDescription(`[${track.title}](${track.url})`)
                     .setColor(0x3A0CA3)
                     .setFooter({
                     text: `Pedido por ${interaction.user.tag}`,
@@ -128,10 +128,10 @@ export default createCommand({
         const player = useMainPlayer();
         const result = await player.search(focusedValue, {
             requestedBy: interaction.user,
-            searchEngine: QueryType.AUTO,
+            searchEngine: QueryType.YOUTUBE,
         });
         const choices = result.tracks.slice(0, 5).map((track) => ({
-            name: track.cleanTitle,
+            name: track.title,
             value: track.url,
         }));
         await interaction.respond(choices);

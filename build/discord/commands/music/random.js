@@ -18,8 +18,8 @@ export default createCommand({
         }
         const shuffleOn = queue.toggleShuffle();
         const embed = new EmbedBuilder()
-            .setColor(0x3A0CA3)
-            .setDescription(shuffleOn ? "🔀 Modo aleatório ativado!" : "🔀 Modo aleatório desativado!");
+            .setColor(0x4CC9F0)
+            .setDescription(shuffleOn ? "🔀 Ordem aleatória ativada!" : "🔀 Ordem aleatória desativada!");
         await interaction.reply({ embeds: [embed] });
     }
 });

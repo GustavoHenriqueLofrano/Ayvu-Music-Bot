@@ -3,6 +3,7 @@ import { EmbedBuilder } from "@discordjs/builders";
 import { QueryType, useMainPlayer } from "discord-player";
 import { ApplicationCommandOptionType, ApplicationCommandType } from "discord.js";
 
+
 export default createCommand({
   name: "play",
   description: "Adiciona uma música ou playlist a fila",
@@ -14,6 +15,7 @@ export default createCommand({
       type: ApplicationCommandOptionType.String, 
       required: true,
       autocomplete: true,
+
     },
     {
       name: "engine",
@@ -48,7 +50,7 @@ export default createCommand({
 
     const result = await player.search(query, {
       requestedBy: interaction.user as never,
-      searchEngine: interaction.options.getString('engine') as never || QueryType.YOUTUBE,
+      searchEngine: interaction.options.getString('engine') as never || QueryType.AUTO,
     });
 
     if (!result.hasTracks()) {
@@ -60,6 +62,7 @@ export default createCommand({
       await interaction.editReply({ embeds: [embed] });
     }
 
+    
     try {
       const { track, searchResult } = await player.play(channel as never, result.tracks[0], {
         nodeOptions: {
@@ -100,7 +103,7 @@ export default createCommand({
 
 
         embed = new EmbedBuilder()
-          .setThumbnail(searchResult.playlist.thumbnail)
+          .setThumbnail(track.thumbnail)
           .setTitle("➕  Playlist adicionada!")
           .setDescription(`[${playlist.title}](${playlist.url})`)
           .setColor(0x3A0CA3)
@@ -125,7 +128,7 @@ export default createCommand({
         embed = new EmbedBuilder()
           .setThumbnail(track.thumbnail)
           .setTitle("➕  Música adicionada!")
-          .setDescription(`[${track.cleanTitle}](${track.url})`)
+          .setDescription(`[${track.title}](${track.url})`)
           .setColor(0x3A0CA3)
           .setFooter({
             text: `Pedido por ${interaction.user.tag}`,
@@ -156,10 +159,10 @@ export default createCommand({
     const player = useMainPlayer();
     const result = await player.search(focusedValue, {
       requestedBy: interaction.user as never,
-      searchEngine: QueryType.AUTO,
+      searchEngine: QueryType.YOUTUBE,
     });
     const choices = result.tracks.slice(0, 5).map((track) => ({
-      name: track.cleanTitle,
+      name: track.title,
       value: track.url,
     }));
     await interaction.respond(choices);
