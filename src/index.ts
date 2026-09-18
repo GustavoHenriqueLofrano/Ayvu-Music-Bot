@@ -1,9 +1,8 @@
 import { bootstrap } from "#base";
 import { Player } from "discord-player";
-import { YoutubeSabrExtractor  } from "discord-player-googlevideo";
 import { SpotifyExtractor } from "discord-player-spotify";
+import { YoutubeiExtractor } from "discord-player-youtubei";
 import { Client, GatewayIntentBits, Partials } from "discord.js";
-import { SoundCloudExtractor} from '@discord-player/extractor';
 import "dotenv/config";
 import createDisconnectEvent from "./discord/events/disconnect.js";
 import createPlayingNowEvent from "./discord/events/playingNow.js";
@@ -30,16 +29,30 @@ const client = new Client({
 const player = new Player(client as never, {
   skipFFmpeg: false,
 });
-await player.extractors.register(SoundCloudExtractor, {});
 await player.extractors.register(SpotifyExtractor, {
   clientId: process.env.SPOTIFY_CLIENT_ID,
   clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
 });
-await player.extractors.register(YoutubeSabrExtractor, {});
-
+await player.extractors.register(YoutubeiExtractor, {
+  useYoutubeDL: true,
+  streamOptions: {
+    useClient: "WEB",
+  },
+});
 await bootstrap({
   meta: import.meta,
   modules: process.env.GUILD_ID ? [process.env.GUILD_ID] : undefined,
+});
+
+// erros
+player.events.on('playerError', (_queue: any, error: any) => {
+  console.error(`[Player Error]: ${error.message}`);
+  console.error(error);
+});
+
+player.events.on('error', (_queue: any, error: any) => {
+  console.error(`[Error]: ${error.message}`);
+  console.error(error);
 });
 
 // Events

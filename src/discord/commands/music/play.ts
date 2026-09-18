@@ -48,23 +48,8 @@ export default createCommand({
     
     await interaction.deferReply();
 
-    const result = await player.search(query, {
-      requestedBy: interaction.user as never,
-      searchEngine: interaction.options.getString('engine') as never || QueryType.AUTO,
-    });
-
-    if (!result.hasTracks()) {
-      const embed = new EmbedBuilder()
-        .setTitle("Nenhum resultado encontrado")
-        .setDescription(`Nenhum resultado para \`${query}\``)
-        .setColor(0xED4245);
-
-      await interaction.editReply({ embeds: [embed] });
-    }
-
-    
     try {
-      const { track, searchResult } = await player.play(channel as never, result.tracks[0], {
+      const { track, searchResult } = await player.play(channel as never, query, {
         nodeOptions: {
           metadata: { interaction, guild: interaction.guild, channel: interaction.channel, requestedBy: interaction.user },
           bufferingTimeout: 15000, 

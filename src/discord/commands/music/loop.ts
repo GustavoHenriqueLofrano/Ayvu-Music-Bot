@@ -1,6 +1,6 @@
 import { createCommand } from "#base";
-import { useMainPlayer, QueueRepeatMode } from "discord-player";
-import { ApplicationCommandType, ApplicationCommandOptionType, EmbedBuilder } from "discord.js";
+import { QueueRepeatMode, useMainPlayer } from "discord-player";
+import { ApplicationCommandOptionType, ApplicationCommandType, EmbedBuilder } from "discord.js";
 
 export default createCommand({
     name: "loop",
