@@ -1,5 +1,5 @@
 import { createCommand } from "#base";
-import { useMainPlayer, QueueRepeatMode } from "discord-player";
+import { QueueRepeatMode, useMainPlayer } from "discord-player";
 import { ApplicationCommandType } from "discord.js";
 export default createCommand({
     name: "autoplay",
@@ -8,7 +8,7 @@ export default createCommand({
     async run(interaction) {
         const player = useMainPlayer();
         const queue = player.nodes.get(interaction.guildId);
-        if (!queue || !queue.currentTrack) {
+        if (!queue || !queue.isPlaying()) {
             await interaction.reply({
                 content: "😕 Nenhuma música tocando no momento",
                 ephemeral: true
@@ -18,16 +18,15 @@ export default createCommand({
         await interaction.deferReply();
         try {
             const isAutoplay = queue.repeatMode === QueueRepeatMode.AUTOPLAY;
-            let description = "";
             if (isAutoplay) {
                 queue.setRepeatMode(QueueRepeatMode.OFF);
-                description = "❌ Autoplay desativado!";
+                await interaction.editReply("❌ Autoplay desativado!");
             }
             else {
+                // Enable autoplay with related videos
                 queue.setRepeatMode(QueueRepeatMode.AUTOPLAY);
-                description = `🔀 Autoplay ativado!`;
+                await interaction.editReply("🔀 Autoplay ativado! O bot irá tocar músicas relacionadas automaticamente.");
             }
-            await interaction.editReply(description);
         }
         catch (error) {
             console.error("Erro no comando /autoplay:", error);

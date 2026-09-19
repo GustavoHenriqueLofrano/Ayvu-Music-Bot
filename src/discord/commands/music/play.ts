@@ -60,7 +60,9 @@ export default createCommand({
           leaveOnEmpty: true, 
           leaveOnEmptyCooldown: 60000, 
           selfDeaf: true,
-
+          disableEqualizer: true,
+          disableBiquad: true,
+          disableResampler: true,
         },
       });
       
@@ -144,7 +146,7 @@ export default createCommand({
     const player = useMainPlayer();
     const result = await player.search(focusedValue, {
       requestedBy: interaction.user as never,
-      searchEngine: QueryType.YOUTUBE,
+      searchEngine: QueryType.AUTO,
     });
     const choices = result.tracks.slice(0, 5).map((track) => ({
       name: track.title,

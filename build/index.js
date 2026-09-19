@@ -1,8 +1,7 @@
 import { bootstrap } from "#base";
 import { Player } from "discord-player";
-import { YoutubeSabrExtractor } from "discord-player-googlevideo";
-import { YoutubeiExtractor } from "discord-player-youtubei";
 import { SpotifyExtractor } from "discord-player-spotify";
+import { YoutubeiExtractor } from "discord-player-youtubei";
 import { Client, GatewayIntentBits, Partials } from "discord.js";
 import "dotenv/config";
 import createDisconnectEvent from "./discord/events/disconnect.js";
@@ -26,18 +25,35 @@ const client = new Client({
 });
 // Player principal
 const player = new Player(client, {
-    blockStreamFrom: [YoutubeiExtractor.identifier],
     skipFFmpeg: false,
 });
 await player.extractors.register(SpotifyExtractor, {
     clientId: process.env.SPOTIFY_CLIENT_ID,
     clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
 });
-await player.extractors.register(YoutubeiExtractor, {});
-await player.extractors.register(YoutubeSabrExtractor, {});
+await player.extractors.register(YoutubeiExtractor, {
+    cookie: process.env.YOUTUBE_COOKIE,
+    useYoutubeDL: true,
+    streamOptions: {
+        highWaterMark: 1024 * 1024 * 64,
+    },
+    overrideDownloadOptions: {
+        quality: 'best',
+        format: 'bestaudio'
+    },
+});
 await bootstrap({
     meta: import.meta,
     modules: process.env.GUILD_ID ? [process.env.GUILD_ID] : undefined,
+});
+// erros
+player.events.on('playerError', (_queue, error) => {
+    console.error(`[Player Error]: ${error.message}`);
+    console.error(error);
+});
+player.events.on('error', (_queue, error) => {
+    console.error(`[Error]: ${error.message}`);
+    console.error(error);
 });
 // Events
 createPlayingNowEvent();

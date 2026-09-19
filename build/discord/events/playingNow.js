@@ -1,6 +1,6 @@
 import formatDuration from "#functions";
 import { QueueRepeatMode, useMainPlayer } from "discord-player";
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, MessageFlags } from "discord.js";
 export default function createPlayingNowEvent() {
     const player = useMainPlayer();
     player.events.on("playerStart", async (queue, track) => {
@@ -48,14 +48,14 @@ export default function createPlayingNowEvent() {
             const player = useMainPlayer();
             const queue = player.nodes.get(interaction.guildId);
             if (!queue) {
-                await interaction.reply({ content: "❌ Nenhuma música tocando.", ephemeral: true });
+                await interaction.reply({ content: "❌ Nenhuma música tocando.", flags: [MessageFlags.Ephemeral] });
                 return;
             }
             const channel = interaction.member.voice.channel;
             if (!channel) {
                 await interaction.reply({
                     content: "😵 Você precisa estar em um canal de voz.",
-                    ephemeral: true,
+                    flags: [MessageFlags.Ephemeral],
                 });
                 return;
             }
@@ -72,25 +72,25 @@ export default function createPlayingNowEvent() {
                         .setColor(0x3A0CA3)
                         .setDescription(queue.node.isPaused() ? "⏸️ Música pausada!" : "▶️ Música tocando!")
                         .addFields({ name: "Música", value: `[${queue.currentTrack?.title}](${queue.currentTrack?.url})` }, { name: "Posição", value: formatDuration(queue.node.getTimestamp()?.current.value || 0) });
-                    await interaction.reply({ embeds: [buttonEmbed], ephemeral: false });
+                    await interaction.reply({ embeds: [buttonEmbed] });
                     break;
                 case "back":
                     queue.history.back();
                     if (!queue.history.back) {
-                        await interaction.reply({ content: "❌ Nenhuma música anterior", ephemeral: true });
+                        await interaction.reply({ content: "❌ Nenhuma música anterior", flags: [MessageFlags.Ephemeral] });
                         return;
                     }
                     buttonEmbed = new EmbedBuilder()
                         .setColor(0x3A0CA3)
                         .setDescription("⏮️ Voltando para a música anterior");
-                    await interaction.reply({ embeds: [buttonEmbed], ephemeral: false });
+                    await interaction.reply({ embeds: [buttonEmbed] });
                     break;
                 case "skip":
                     queue.node.skip();
                     buttonEmbed = new EmbedBuilder()
                         .setColor(0x3A0CA3)
                         .setDescription("⏩ Pulando para a próxima música");
-                    await interaction.reply({ embeds: [buttonEmbed], ephemeral: false });
+                    await interaction.reply({ embeds: [buttonEmbed] });
                     break;
                 case "loop":
                     let queueMode;
@@ -123,7 +123,7 @@ export default function createPlayingNowEvent() {
                     break;
                 case "random":
                     if (queue.tracks.size < 2) {
-                        await interaction.reply({ content: "😕 A fila precisa ter pelo menos 2 músicas para ativar o modo aleatório", ephemeral: true });
+                        await interaction.reply({ content: "😕 A fila precisa ter pelo menos 2 músicas para ativar o modo aleatório", flags: [MessageFlags.Ephemeral] });
                         break;
                     }
                     const shuffleOn = queue.toggleShuffle();

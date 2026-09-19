@@ -37,19 +37,8 @@ export default createCommand({
         }
         const query = interaction.options.getString('query', true);
         await interaction.deferReply();
-        const result = await player.search(query, {
-            requestedBy: interaction.user,
-            searchEngine: interaction.options.getString('engine') || QueryType.AUTO,
-        });
-        if (!result.hasTracks()) {
-            const embed = new EmbedBuilder()
-                .setTitle("Nenhum resultado encontrado")
-                .setDescription(`Nenhum resultado para \`${query}\``)
-                .setColor(0xED4245);
-            await interaction.editReply({ embeds: [embed] });
-        }
         try {
-            const { track, searchResult } = await player.play(channel, result.tracks[0], {
+            const { track, searchResult } = await player.play(channel, query, {
                 nodeOptions: {
                     metadata: { interaction, guild: interaction.guild, channel: interaction.channel, requestedBy: interaction.user },
                     bufferingTimeout: 15000,
@@ -60,6 +49,9 @@ export default createCommand({
                     leaveOnEmpty: true,
                     leaveOnEmptyCooldown: 60000,
                     selfDeaf: true,
+                    disableEqualizer: true,
+                    disableBiquad: true,
+                    disableResampler: true,
                 },
             });
             let embed;
@@ -128,7 +120,7 @@ export default createCommand({
         const player = useMainPlayer();
         const result = await player.search(focusedValue, {
             requestedBy: interaction.user,
-            searchEngine: QueryType.YOUTUBE,
+            searchEngine: QueryType.AUTO,
         });
         const choices = result.tracks.slice(0, 5).map((track) => ({
             name: track.title,

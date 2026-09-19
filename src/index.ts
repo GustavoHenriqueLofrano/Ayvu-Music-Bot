@@ -34,9 +34,14 @@ await player.extractors.register(SpotifyExtractor, {
   clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
 });
 await player.extractors.register(YoutubeiExtractor, {
+  cookie: process.env.YOUTUBE_COOKIE,
   useYoutubeDL: true,
   streamOptions: {
-    useClient: "WEB",
+    highWaterMark: 1024 * 1024 * 64,
+  },
+  overrideDownloadOptions: {
+    quality: 'best',
+    format: 'bestaudio'
   },
 });
 await bootstrap({

@@ -24,11 +24,11 @@ export default createCommand({
         const isAutoplay = queue.repeatMode === QueueRepeatMode.AUTOPLAY;
         
         if (isAutoplay) {
-            await queue.setRepeatMode(QueueRepeatMode.OFF);
+            queue.setRepeatMode(QueueRepeatMode.OFF);
             await interaction.editReply("❌ Autoplay desativado!");
         } else {
             // Enable autoplay with related videos
-            await queue.setRepeatMode(QueueRepeatMode.AUTOPLAY);
+            queue.setRepeatMode(QueueRepeatMode.AUTOPLAY);
             await interaction.editReply("🔀 Autoplay ativado! O bot irá tocar músicas relacionadas automaticamente.");
         }
 
