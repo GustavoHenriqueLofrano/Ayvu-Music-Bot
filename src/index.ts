@@ -40,8 +40,8 @@ await player.extractors.register(YoutubeiExtractor, {
     highWaterMark: 1024 * 1024 * 64,
   },
   overrideDownloadOptions: {
-    quality: 'best',
-    format: 'bestaudio'
+    quality: 'bestefficiency',
+    format: 'mp4',
   },
 });
 await bootstrap({
